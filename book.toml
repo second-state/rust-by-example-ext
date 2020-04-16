@@ -1,0 +1,11 @@
+[book]
+title = "Rust By Example -- Extended Edition"
+description = "Covers popular third party Rust crates and libraries by example"
+author = "Second State"
+
+[output.html.playpen]
+editable = true
+editor = "ace"
+
+[output.html.fold]
+enable = true
