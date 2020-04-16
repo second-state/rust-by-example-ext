@@ -2,10 +2,15 @@
 
 [Introduction](index.md)
 
-- [Hello World](hello.md)
-    - [Comments](hello/comment.md)
-    - [Formatted print](hello/print.md)
+- [Serialization](serde.md)
+    - [JSON](serde/json.md)
+    - [Binary](serde/bincode.md)
+    - [Third party crates](serde/feature.md)
     
-- [Meta](meta.md)
-    - [Documentation](meta/doc.md)
-    - [Playpen](meta/playpen.md)
+- [WebAssembly](webassembly.md)
+    - [Compile targets](webassembly/compile.md)
+    - [Run](webassembly/run.md)
+    - [In a browser host](webassembly/browser.md)
+    - [In Node.js host](webassembly/nodejs.md)
+    - [In Node.js host with SSVM](webassembly/ssvm.md)
+    
