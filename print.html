@@ -3,7 +3,9 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Rust By Example -- Extended Edition</title>
+        <title>Rust By Example -- Extended Edition</title>
+        
+        <meta name="robots" content="noindex" />
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="index.html" class="active">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="rand/number.html"><strong aria-hidden="true">2.1.</strong> Get a number</a></li><li class="chapter-item "><a href="rand/array.html"><strong aria-hidden="true">2.2.</strong> Fill an array</a></li><li class="chapter-item "><a href="rand/webassembly.html"><strong aria-hidden="true">2.3.</strong> WebAssembly randomness</a></li></ol></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">3.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">3.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">3.2.</strong> Run</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">3.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">3.4.</strong> Node.js host</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="rand/number.html"><strong aria-hidden="true">2.1.</strong> Get a number</a></li><li class="chapter-item "><a href="rand/array.html"><strong aria-hidden="true">2.2.</strong> Fill an array</a></li><li class="chapter-item "><a href="rand/webassembly.html"><strong aria-hidden="true">2.3.</strong> WebAssembly randomness</a></li></ol></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">3.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">3.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">3.2.</strong> Run</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">3.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">3.4.</strong> Node.js host</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,6 +171,19 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
 <p><a href="webassembly.html">WebAssembly</a> - It is very popular to run Rust apps in WebAssembly, learn why and how.</p>
 </li>
 </ul>
+<h1><a class="header" href="#serialization-and-deserialization" id="serialization-and-deserialization">Serialization and deserialization</a></h1>
+<h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
+<h1><a class="header" href="#serialize-into-binary" id="serialize-into-binary">Serialize into binary</a></h1>
+<h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
+<h1><a class="header" href="#random-numbers" id="random-numbers">Random numbers</a></h1>
+<h1><a class="header" href="#get-a-random-number" id="get-a-random-number">Get a random number</a></h1>
+<h1><a class="header" href="#fill-an-array-with-random-numbers" id="fill-an-array-with-random-numbers">Fill an array with random numbers</a></h1>
+<h1><a class="header" href="#use-the-rand-crate-in-webassembly" id="use-the-rand-crate-in-webassembly">Use the rand crate in WebAssembly</a></h1>
+<h1><a class="header" href="#webassembly" id="webassembly">WebAssembly</a></h1>
+<h1><a class="header" href="#compile-targets-for-webassembly" id="compile-targets-for-webassembly">Compile targets for WebAssembly</a></h1>
+<h1><a class="header" href="#run-webassembly-programs" id="run-webassembly-programs">Run WebAssembly programs</a></h1>
+<h1><a class="header" href="#run-webassembly-programs-in-a-browser-host" id="run-webassembly-programs-in-a-browser-host">Run WebAssembly programs in a browser host</a></h1>
+<h1><a class="header" href="#run-webassembly-programs-in-a-nodejs-host" id="run-webassembly-programs-in-a-nodejs-host">Run WebAssembly programs in a Node.js host</a></h1>
 
                     </main>
 
@@ -176,10 +191,6 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
                         <!-- Mobile navigation buttons -->
                         
 
-                        
-                            <a rel="next" href="serde.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -190,10 +201,6 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
 
-                
-                    <a rel="next" href="serde.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 
@@ -232,6 +239,14 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
         <!-- Custom JS scripts -->
         
 
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
         
 
     </body>

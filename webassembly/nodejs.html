@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Rust By Example -- Extended Edition</title>
+        <title>Node.js host - Rust By Example -- Extended Edition</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -11,21 +11,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -35,7 +35,7 @@
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="index.html" class="active">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="rand/number.html"><strong aria-hidden="true">2.1.</strong> Get a number</a></li><li class="chapter-item "><a href="rand/array.html"><strong aria-hidden="true">2.2.</strong> Fill an array</a></li><li class="chapter-item "><a href="rand/webassembly.html"><strong aria-hidden="true">2.3.</strong> WebAssembly randomness</a></li></ol></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">3.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">3.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">3.2.</strong> Run</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">3.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">3.4.</strong> Node.js host</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">Introduction</a></li><li class="chapter-item "><a href="../serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="../serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="../serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="../rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../rand/number.html"><strong aria-hidden="true">2.1.</strong> Get a number</a></li><li class="chapter-item "><a href="../rand/array.html"><strong aria-hidden="true">2.2.</strong> Fill an array</a></li><li class="chapter-item "><a href="../rand/webassembly.html"><strong aria-hidden="true">2.3.</strong> WebAssembly randomness</a></li></ol></li><li class="chapter-item expanded "><a href="../webassembly.html"><strong aria-hidden="true">3.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../webassembly/compile.html"><strong aria-hidden="true">3.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="../webassembly/run.html"><strong aria-hidden="true">3.2.</strong> Run</a></li><li class="chapter-item "><a href="../webassembly/browser.html"><strong aria-hidden="true">3.3.</strong> Web browser host</a></li><li class="chapter-item expanded "><a href="../webassembly/nodejs.html" class="active"><strong aria-hidden="true">3.4.</strong> Node.js host</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -116,7 +116,7 @@
                     <h1 class="menu-title">Rust By Example -- Extended Edition</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
@@ -147,39 +147,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#rust-by-example" id="rust-by-example">Rust by Example</a></h1>
-<p><a href="https://www.rust-lang.org/">Rust</a> is a modern systems programming language focusing on safety, speed,
-and concurrency. It accomplishes these goals by being memory safe without using 
-garbage collection. A big part of Rust's strength and success comes from the
-large ecosystem of third party libraries, known as crates.</p>
-<p>Rust by Example Extended Edition (RBEext) is a collection of runnable examples that illustrate how to use popular Rust
-third party libraries and crates. It is designed to complement the official 
-<a href="https://doc.rust-lang.org/rust-by-example/">Rust by Example (RBE)</a> book that focuses on the 
-core language and standard libraries.
-Additionally for the curious, you can also <a href="https://github.com/second-state/rust-by-example-ext">check out the source code for this site</a>.</p>
-<p>Now let's begin!</p>
-<ul>
-<li>
-<p><a href="serde.html">Serialization</a> - Serialization and deserialization are key to data exchange between Rust programs and the rest of the world. The <code>serde</code> crate is the de facto standard here.</p>
-</li>
-<li>
-<p><a href="rand.html">Random numbers</a> - It is surprisingly difficult to get high quality random numbers for your application. The <code>rand</code> crate can help.</p>
-</li>
-<li>
-<p><a href="webassembly.html">WebAssembly</a> - It is very popular to run Rust apps in WebAssembly, learn why and how.</p>
-</li>
-</ul>
+                        <h1><a class="header" href="#run-webassembly-programs-in-a-nodejs-host" id="run-webassembly-programs-in-a-nodejs-host">Run WebAssembly programs in a Node.js host</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="serde.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="../webassembly/browser.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -189,11 +168,11 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a rel="next" href="serde.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="../webassembly/browser.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 
@@ -212,22 +191,22 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
         
 
         
-        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         
