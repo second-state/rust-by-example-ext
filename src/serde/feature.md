@@ -12,7 +12,7 @@ num-bigint = { version = "0.2", features = ["serde"] }
 num = "0.2"
 ```
 
-Note: Since the `serde` feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from [this cargo project](https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature).
+> **Note:** Since the `serde` feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from [this cargo project](https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature).
 
 The example below shows how to serialize and deserialize a `BigInt` struct type from the `num_bigint` crate. It just works out of the box.
 
