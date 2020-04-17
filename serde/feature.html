@@ -148,18 +148,36 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
-</span><span class="boring">extern crate num;
-</span>
-use num::bigint::ToBigInt;
+<p>Many third party Rust crates already support serialization and deserialization
+via the <code>serde</code> crate. You just need to enable the <code>serde</code> feature when you 
+declare the crate as dependency.</p>
+<pre><code>[dependencies]
+serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
+serde_json = &quot;1.0&quot;
+num-bigint = { version = &quot;0.2&quot;, features = [&quot;serde&quot;] }
+num = &quot;0.2&quot;
+</code></pre>
+<p>Note: Since the <code>serde</code> feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature">this cargo project</a>.</p>
+<p>The example below shows how to serialize and deserialize a <code>BigInt</code> struct type from the <code>num_bigint</code> crate. It just works out of the box.</p>
+<pre><code class="language-rust noplaypen">use num::bigint::ToBigInt;
+use num_bigint::BigInt;
 
 fn main() {
     let a = 3.to_bigint().unwrap();
     let x = num::pow(a, 247);
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;3**247 is {}&quot;, xs);
+    let xd: BigInt = serde_json::from_str(&amp;xs).unwrap();
+    assert_eq!(x, xd);
+
+    println!(&quot;3**247 is {} and serializes to {}&quot;, x, xs);
 }
-</code></pre></pre>
+</code></pre>
+<p>Result</p>
+<pre><code>3**247 is 7062361041362837614435796717454722507454089864783271756927542774477268334591598635421519542453366332460075473278915787 and serializes to [1,[3323516107,3672165520,4080039719,3245710364,216105283,4292129601,4006727268,340573034,2851604588,3366124224,3797961372,1024846073,179]]
+</code></pre>
+<p>What about third party crates that are not yet to support the <code>serde</code> feature?
+The <code>serde</code> crate provides another approach called <a href="https://serde.rs/remote-derive.html">remote derive</a>. Basically, you create a local copy of the remote type
+and then serialize the local type through a bridge. Check out the <a href="https://serde.rs/remote-derive.html">documentation</a>.</p>
 
                     </main>
 

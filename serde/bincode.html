@@ -155,7 +155,7 @@ bincode = &quot;1.2.1&quot;
 </code></pre>
 <p>Note: Since the <code>bincode</code> crate is not included the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/bincode">this cargo project</a>.</p>
 <p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a byte array, and then deserialize it back. You can pass this byte array to other Rust programs over the Internet.</p>
-<pre><code>use bincode;
+<pre><code class="language-rust noplaypen">use bincode;
 
 fn main() {
     let x: i32 = 5;
@@ -169,7 +169,7 @@ fn main() {
 <pre><code>i32 number 5 serializes into byte array [5, 0, 0, 0]
 </code></pre>
 <p>Here are more examples showing the serialization and deserialization of Rust primitive data types. Edit the code below to try more Rust types, and run it to see the results.</p>
-<pre><pre class="playpen"><code class="language-rust">use bincode;
+<pre><code class="language-rust noplaypen">use bincode;
 
 fn main() {
     let x: i32 = 5;
@@ -204,7 +204,7 @@ fn main() {
     let xs = bincode::serialize(&amp;x).unwrap();
     println!(&quot;nested tuple {:?} serializes into byte array {:?}&quot;, x, xs);
 }
-</code></pre></pre>
+</code></pre>
 <p>Result</p>
 <pre><code>i32 number 5 serializes into byte array [5, 0, 0, 0]
 f32 number 3.14 serializes into byte array [195, 245, 72, 64]
@@ -214,7 +214,7 @@ tuple (1, &quot;hello&quot;, 4.5, true) serializes into byte array [1, 0, 0, 0, 
 nested tuple ((1, 2), (3.141, 'a'), true) serializes into byte array [1, 2, 0, 37, 6, 73, 64, 97, 1]
 </code></pre>
 <p>What about structs and other custom Rust data types? Well, you just need to annotate them with <code>serde</code> and they will automagically get serialization capabilities!</p>
-<pre><code>use serde::{Serialize, Deserialize};
+<pre><code class="language-rust noplaypen">use serde::{Serialize, Deserialize};
 use bincode;
 
 #[derive(Serialize, Deserialize, Debug)]
