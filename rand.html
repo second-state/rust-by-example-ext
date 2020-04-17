@@ -174,14 +174,17 @@ fn main() {
     let x: f64 = rand::random();
     println!(&quot;The random f64 is {}&quot;, x);
 
-    let x = rand::random();
-    println!(&quot;By default, it generates a boolean {}&quot;, x);
+    let x:bool = rand::random();
+    println!(&quot;The random bool {}&quot;, x);
 }
 </code></pre></pre>
 <p>What about generating a random number within a range? For that, you need to
 create a random number generator and call its <code>gen_range()</code> function.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
+use rand::thread_rng;
+use rand::Rng;
+
 fn main() {
     let mut rng = thread_rng();
     let y: f64 = rng.gen_range(-10.0, 10.0)
@@ -196,6 +199,9 @@ a new random number generator. It is faster to create the generator once and
 call its <code>gen()</code> function repeatedly.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
+use rand::thread_rng;
+use rand::Rng;
+
 fn main() {
     let mut rng = thread_rng();
     for i in 1..10 {
@@ -206,10 +212,13 @@ fn main() {
 <p>The generator can quickly fill an array with random integers.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
+use rand::thread_rng;
+use rand::Rng;
+
 fn main() {
     let mut arr = [0i32; 9];
     thread_rng().try_fill(&amp;mut arr[..])?;
-    println!(&quot;Random number array {:?}&quot;, arr));
+    println!(&quot;Random number array {:?}&quot;, arr);
 }
 </code></pre></pre>
 <p>Another neat feature of the generator is that it can generate random numbers 
