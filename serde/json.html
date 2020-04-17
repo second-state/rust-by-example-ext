@@ -148,6 +148,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
+<p>To use the <code>serde</code> crate, you just need to add the following dependencies to your <code>Cargo.toml</code> file.</p>
+<pre><code>[dependencies]
+serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
+serde_json = &quot;1.0&quot;
+</code></pre>
 <p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a JSON string, and then deserialize it back. Run it! You can pass this JSON string to other Rust programs or Internet applications written in other languages.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
 </span>
@@ -159,7 +164,7 @@ fn main() {
     assert_eq!(x, xd);
 }
 </code></pre></pre>
-<p>Here are more examples showing the serialization and deserialization of Rust primitive data types. Rust arrays and tuples are all serialized to JSON arrays.</p>
+<p>Here are more examples showing the serialization and deserialization of Rust primitive data types. Rust arrays and tuples are all serialized to JSON arrays. Edit the code below to try more Rust types, and run it to see the results.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
 </span>
 fn main() {
