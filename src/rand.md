@@ -51,7 +51,7 @@ use rand::Rng;
 
 fn main() {
     let mut rng = thread_rng();
-    let y: f64 = rng.gen_range(-10.0, 10.0)
+    let y: f64 = rng.gen_range(-10.0, 10.0);
     println!("Number from -10. to 10.: {}", y);
     println!("Number from 0 to 9: {}", rng.gen_range(0, 10));
 }
@@ -88,7 +88,7 @@ use rand::Rng;
 
 fn main() {
     let mut arr = [0i32; 9];
-    thread_rng().try_fill(&mut arr[..])?;
+    thread_rng().try_fill(&mut arr[..]);
     println!("Random number array {:?}", arr);
 }
 ```
@@ -98,6 +98,9 @@ from a probability distribution.
 
 ```rust,editable
 # extern crate rand;
+
+use rand::thread_rng;
+use rand::Rng;
 
 fn main() {
     let mut rng = thread_rng();
