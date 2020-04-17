@@ -1,5 +1,13 @@
 # Serialize into JSON strings
 
+To use the `serde` crate, you just need to add the following dependencies to your `Cargo.toml` file.
+
+```
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+```
+
 The example below shows how to serialize a simple Rust primitive data type `i32` into a JSON string, and then deserialize it back. Run it! You can pass this JSON string to other Rust programs or Internet applications written in other languages.
 
 ```rust,editable
@@ -14,7 +22,7 @@ fn main() {
 }
 ```
 
-Here are more examples showing the serialization and deserialization of Rust primitive data types. Rust arrays and tuples are all serialized to JSON arrays.
+Here are more examples showing the serialization and deserialization of Rust primitive data types. Rust arrays and tuples are all serialized to JSON arrays. Edit the code below to try more Rust types, and run it to see the results.
 
 ```rust,editable
 # extern crate serde;
