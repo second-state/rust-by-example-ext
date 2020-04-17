@@ -148,6 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
+<p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a JSON string, and then deserialize it back. Run it! You can pass this JSON string to other Rust programs or Internet applications written in other languages.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
 </span>
 fn main() {
@@ -156,6 +157,41 @@ fn main() {
     println!(&quot;i32 number {} serializes into string {}&quot;, x, xs);
     let xd: i32 = serde_json::from_str(&amp;xs).unwrap();
     assert_eq!(x, xd);
+}
+</code></pre></pre>
+<p>Here are more examples showing the serialization and deserialization of Rust primitive data types. Rust arrays and tuples are all serialized to JSON arrays.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+</span>
+fn main() {
+    let x: i32 = 5;
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;i32 number {} serializes into string {}&quot;, x, xs);
+    let xd: i32 = serde_json::from_str(&amp;xs).unwrap();
+    assert_eq!(x, xd);
+
+    let x: f32 = 3.14;
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;f32 number {} serializes into string {}&quot;, x, xs);
+
+    let x: Vec&lt;u8&gt; = vec![1, 2, 3];
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;Vec&lt;u8&gt; serializes into string {}&quot;, xs);
+    let xd: Vec&lt;u8&gt; = serde_json::from_str(&amp;xs).unwrap();
+    assert_eq!(x, xd);
+
+    let x: Vec&lt;f32&gt; = vec![3.141, 2.718, 1.618];
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;Vec&lt;f32&gt; serializes into string {}&quot;, xs);
+    
+    let x: (i32, &amp;str, f32, bool) = (1, &quot;hello&quot;, 4.5, true);
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;tuple serializes into string {}&quot;, xs);
+    let xd: (i32, &amp;str, f32, bool) = serde_json::from_str(&amp;xs).unwrap();
+    assert_eq!(x, xd);
+
+    let x = ((1u8, 2u16), (3.141f32, 'a'), true);
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;nested tuple serializes into string {}&quot;, xs);
 }
 </code></pre></pre>
 
