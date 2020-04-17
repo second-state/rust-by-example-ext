@@ -35,8 +35,8 @@ fn main() {
     let x: f64 = rand::random();
     println!("The random f64 is {}", x);
 
-    let x = rand::random();
-    println!("By default, it generates a boolean {}", x);
+    let x:bool = rand::random();
+    println!("The random bool {}", x);
 }
 ```
 
@@ -45,6 +45,9 @@ create a random number generator and call its `gen_range()` function.
 
 ```rust,editable
 # extern crate rand;
+
+use rand::thread_rng;
+use rand::Rng;
 
 fn main() {
     let mut rng = thread_rng();
@@ -64,6 +67,9 @@ call its `gen()` function repeatedly.
 ```rust,editable
 # extern crate rand;
 
+use rand::thread_rng;
+use rand::Rng;
+
 fn main() {
     let mut rng = thread_rng();
     for i in 1..10 {
@@ -77,10 +83,13 @@ The generator can quickly fill an array with random integers.
 ```rust,editable
 # extern crate rand;
 
+use rand::thread_rng;
+use rand::Rng;
+
 fn main() {
     let mut arr = [0i32; 9];
     thread_rng().try_fill(&mut arr[..])?;
-    println!("Random number array {:?}", arr));
+    println!("Random number array {:?}", arr);
 }
 ```
 
