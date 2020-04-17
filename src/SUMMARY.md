@@ -8,9 +8,6 @@
     - [Third party crates](serde/feature.md)
 
 - [Random numbers](rand.md)
-    - [Get a number](rand/number.md)
-    - [Fill an array](rand/array.md)
-    - [WebAssembly randomness](rand/webassembly.md)
     
 - [WebAssembly](webassembly.md)
     - [Compile targets](webassembly/compile.md)
