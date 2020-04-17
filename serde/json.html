@@ -180,23 +180,23 @@ fn main() {
 
     let x: Vec&lt;u8&gt; = vec![1, 2, 3];
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;Vec&lt;u8&gt; serializes into string {}&quot;, xs);
+    println!(&quot;Vec&lt;u8&gt; {:?} serializes into string {}&quot;, x, xs);
     let xd: Vec&lt;u8&gt; = serde_json::from_str(&amp;xs).unwrap();
     assert_eq!(x, xd);
 
     let x: Vec&lt;f32&gt; = vec![3.141, 2.718, 1.618];
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;Vec&lt;f32&gt; serializes into string {}&quot;, xs);
+    println!(&quot;Vec&lt;f32&gt; {:?} serializes into string {}&quot;, x, xs);
     
     let x: (i32, &amp;str, f32, bool) = (1, &quot;hello&quot;, 4.5, true);
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;tuple serializes into string {}&quot;, xs);
+    println!(&quot;tuple {:?} serializes into string {}&quot;, x, xs);
     let xd: (i32, &amp;str, f32, bool) = serde_json::from_str(&amp;xs).unwrap();
     assert_eq!(x, xd);
 
     let x = ((1u8, 2u16), (3.141f32, 'a'), true);
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;nested tuple serializes into string {}&quot;, xs);
+    println!(&quot;nested tuple {:?} serializes into string {}&quot;, x, xs);
 }
 </code></pre></pre>
 <p>What about structs and other custom Rust data types? Well, you just need to annotate them and they will automagically get serialization capabilities! Run the example below and you can see the JSON string representation of these Rust structs.</p>
@@ -231,9 +231,12 @@ fn main() {
     let line = Line { points: vec![point1, point2], valid: valid, length: length, desc: &quot;a thin line&quot;.to_string() };
     let lines = serde_json::to_string(&amp;line).unwrap();
     println!(&quot;struct Line serializes into string {}&quot;, lines);
+
+    let lined: Line = serde_json::from_str(&amp;lines).unwrap();
+    assert_eq!(lined.desc, &quot;a thin line&quot;);
+    assert_eq!(lined.points[1].x, 3.0);
 }
 </code></pre></pre>
-<p>As an exercise, please edit the code above, deserialize the JSON string back into a <code>Line</code> struct, and check its internal values are all correct!</p>
 
                     </main>
 

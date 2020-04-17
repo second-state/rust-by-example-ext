@@ -148,6 +148,18 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+</span><span class="boring">extern crate num;
+</span>
+use num::bigint::ToBigInt;
+
+fn main() {
+    let a = 3.to_bigint().unwrap();
+    let x = num::pow(a, 247);
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;3**247 is {}&quot;, xs);
+}
+</code></pre></pre>
 
                     </main>
 

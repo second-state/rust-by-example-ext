@@ -176,7 +176,7 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
 over the Internet, it needs to serialize its data into a format that can be transmitted through the network. The receiving
 program uses deserialization to reconstruct the data.</p>
 <p>In Rust, most applications use the <a href="https://crates.io/crates/serde"><code>serde</code></a> crate to manage serialization and deserialization. In this chapter, we will cover how to serialize typed Rust data into <a href="serde/json.html">JSON strings</a> 
-or <a href="serde/binary.html">byte arrays</a>. We will also discuss how to serialize third party structs in libraries.</p>
+or <a href="serde/bincode.html">byte arrays</a>. We will also discuss how to serialize third party structs in libraries.</p>
 <p>Checkout the <a href="https://serde.rs/">offical documentation</a> for the <code>serde</code> crate.</p>
 <h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
 <p>To use the <code>serde</code> crate, you just need to add the following dependencies to your <code>Cargo.toml</code> file.</p>
@@ -211,23 +211,23 @@ fn main() {
 
     let x: Vec&lt;u8&gt; = vec![1, 2, 3];
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;Vec&lt;u8&gt; serializes into string {}&quot;, xs);
+    println!(&quot;Vec&lt;u8&gt; {:?} serializes into string {}&quot;, x, xs);
     let xd: Vec&lt;u8&gt; = serde_json::from_str(&amp;xs).unwrap();
     assert_eq!(x, xd);
 
     let x: Vec&lt;f32&gt; = vec![3.141, 2.718, 1.618];
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;Vec&lt;f32&gt; serializes into string {}&quot;, xs);
+    println!(&quot;Vec&lt;f32&gt; {:?} serializes into string {}&quot;, x, xs);
     
     let x: (i32, &amp;str, f32, bool) = (1, &quot;hello&quot;, 4.5, true);
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;tuple serializes into string {}&quot;, xs);
+    println!(&quot;tuple {:?} serializes into string {}&quot;, x, xs);
     let xd: (i32, &amp;str, f32, bool) = serde_json::from_str(&amp;xs).unwrap();
     assert_eq!(x, xd);
 
     let x = ((1u8, 2u16), (3.141f32, 'a'), true);
     let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;nested tuple serializes into string {}&quot;, xs);
+    println!(&quot;nested tuple {:?} serializes into string {}&quot;, x, xs);
 }
 </code></pre></pre>
 <p>What about structs and other custom Rust data types? Well, you just need to annotate them and they will automagically get serialization capabilities! Run the example below and you can see the JSON string representation of these Rust structs.</p>
@@ -262,18 +262,22 @@ fn main() {
     let line = Line { points: vec![point1, point2], valid: valid, length: length, desc: &quot;a thin line&quot;.to_string() };
     let lines = serde_json::to_string(&amp;line).unwrap();
     println!(&quot;struct Line serializes into string {}&quot;, lines);
+
+    let lined: Line = serde_json::from_str(&amp;lines).unwrap();
+    assert_eq!(lined.desc, &quot;a thin line&quot;);
+    assert_eq!(lined.points[1].x, 3.0);
 }
 </code></pre></pre>
-<p>As an exercise, please edit the code above, deserialize the JSON string back into a <code>Line</code> struct, and check its internal values are all correct!</p>
 <h1><a class="header" href="#serialize-into-binary" id="serialize-into-binary">Serialize into binary</a></h1>
 <p>JSON strings are portable across almost all programming languages and frameworks. But for communication between Rust programs, a binary format could be much more efficient. Here is where <code>bincode</code> comes into play. To use the <code>bincode</code> crate, you just need to add the following dependencies to your <code>Cargo.toml</code> file.</p>
 <pre><code>[dependencies]
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
 bincode = &quot;1.2.1&quot;
 </code></pre>
-<p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a JSON string, and then deserialize it back. Run it! You can pass this JSON string to other Rust programs or Internet applications written in other languages.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate bincode;
-</span>
+<p>Note: Since the <code>bincode</code> crate is not included the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/bincode">this cargo project</a>.</p>
+<p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a byte array, and then deserialize it back. You can pass this byte array to other Rust programs over the Internet.</p>
+<pre><code>use bincode;
+
 fn main() {
     let x: i32 = 5;
     let xs: Vec&lt;u8&gt; = bincode::serialize(&amp;x).unwrap();
@@ -281,47 +285,58 @@ fn main() {
     let xd: i32 = bincode::deserialize(&amp;xs).unwrap();
     assert_eq!(x, xd);
 }
-</code></pre></pre>
+</code></pre>
+<p>Result</p>
+<pre><code>i32 number 5 serializes into byte array [5, 0, 0, 0]
+</code></pre>
 <p>Here are more examples showing the serialization and deserialization of Rust primitive data types. Edit the code below to try more Rust types, and run it to see the results.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
-</span>
+<pre><pre class="playpen"><code class="language-rust">use bincode;
+
 fn main() {
     let x: i32 = 5;
-    let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;i32 number {} serializes into string {}&quot;, x, xs);
-    let xd: i32 = serde_json::from_str(&amp;xs).unwrap();
+    let xs: Vec&lt;u8&gt; = bincode::serialize(&amp;x).unwrap();
+    println!(&quot;i32 number {} serializes into byte array {:?}&quot;, x, xs);
+    let xd: i32 = bincode::deserialize(&amp;xs).unwrap();
     assert_eq!(x, xd);
 
     let x: f32 = 3.14;
-    let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;f32 number {} serializes into string {}&quot;, x, xs);
+    let xs = bincode::serialize(&amp;x).unwrap();
+    println!(&quot;f32 number {} serializes into byte array {:?}&quot;, x, xs);
 
     let x: Vec&lt;u8&gt; = vec![1, 2, 3];
-    let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;Vec&lt;u8&gt; serializes into string {}&quot;, xs);
-    let xd: Vec&lt;u8&gt; = serde_json::from_str(&amp;xs).unwrap();
+    let xs = bincode::serialize(&amp;x).unwrap();
+    println!(&quot;Vec&lt;u8&gt; {:?} serializes into byte array {:?}&quot;, x, xs);
+    let xd: Vec&lt;u8&gt; = bincode::deserialize(&amp;xs).unwrap();
     assert_eq!(x, xd);
 
     let x: Vec&lt;f32&gt; = vec![3.141, 2.718, 1.618];
-    let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;Vec&lt;f32&gt; serializes into string {}&quot;, xs);
-    
+    let xs = bincode::serialize(&amp;x).unwrap();
+    println!(&quot;Vec&lt;f32&gt; {:?} serializes into byte array {:?}&quot;, x, xs);
+    let xd: Vec&lt;f32&gt; = bincode::deserialize(&amp;xs).unwrap();
+    assert_eq!(x, xd);
+
     let x: (i32, &amp;str, f32, bool) = (1, &quot;hello&quot;, 4.5, true);
-    let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;tuple serializes into string {}&quot;, xs);
-    let xd: (i32, &amp;str, f32, bool) = serde_json::from_str(&amp;xs).unwrap();
+    let xs = bincode::serialize(&amp;x).unwrap();
+    println!(&quot;tuple {:?} serializes into byte array {:?}&quot;, x, xs);
+    let xd: (i32, &amp;str, f32, bool) = bincode::deserialize(&amp;xs).unwrap();
     assert_eq!(x, xd);
 
     let x = ((1u8, 2u16), (3.141f32, 'a'), true);
-    let xs = serde_json::to_string(&amp;x).unwrap();
-    println!(&quot;nested tuple serializes into string {}&quot;, xs);
+    let xs = bincode::serialize(&amp;x).unwrap();
+    println!(&quot;nested tuple {:?} serializes into byte array {:?}&quot;, x, xs);
 }
 </code></pre></pre>
-<p>What about structs and other custom Rust data types? Well, you just need to annotate them with <code>serde</code> and they will automagically get serialization capabilities! Run the example below and you can see the byte array representation of these Rust structs.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate bincode;
-</span><span class="boring">extern crate serde;
-</span>
-use serde::{Serialize, Deserialize};
+<p>Result</p>
+<pre><code>i32 number 5 serializes into byte array [5, 0, 0, 0]
+f32 number 3.14 serializes into byte array [195, 245, 72, 64]
+Vec&lt;u8&gt; [1, 2, 3] serializes into byte array [3, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3]
+Vec&lt;f32&gt; [3.141, 2.718, 1.618] serializes into byte array [3, 0, 0, 0, 0, 0, 0, 0, 37, 6, 73, 64, 182, 243, 45, 64, 160, 26, 207, 63]
+tuple (1, &quot;hello&quot;, 4.5, true) serializes into byte array [1, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 104, 101, 108, 108, 111, 0, 0, 144, 64, 1]
+nested tuple ((1, 2), (3.141, 'a'), true) serializes into byte array [1, 2, 0, 37, 6, 73, 64, 97, 1]
+</code></pre>
+<p>What about structs and other custom Rust data types? Well, you just need to annotate them with <code>serde</code> and they will automagically get serialization capabilities!</p>
+<pre><code>use serde::{Serialize, Deserialize};
+use bincode;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Point {
@@ -340,20 +355,40 @@ struct Line {
 fn main() {
     let point1: Point = Point {x:1.0, y:2.0};
     let point2: Point = Point {x:3.0, y:4.0};
-    let point1s = serde_json::to_string(&amp;point1).unwrap();
-    let point2s = serde_json::to_string(&amp;point2).unwrap();
-    println!(&quot;struct Point serializes into string {}&quot;, point1s);
-    println!(&quot;struct Point serializes into string {}&quot;, point2s);
+    let point1s = bincode::serialize(&amp;point1).unwrap();
+    let point2s = bincode::serialize(&amp;point2).unwrap();
+    println!(&quot;struct Point serializes into byte array {:?}&quot;, point1s);
+    println!(&quot;struct Point serializes into byte array {:?}&quot;, point2s);
 
     let length = ((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y)).sqrt();
     let valid = if length == 0.0 { false } else { true };
     let line = Line { points: vec![point1, point2], valid: valid, length: length, desc: &quot;a thin line&quot;.to_string() };
-    let lines = serde_json::to_string(&amp;line).unwrap();
-    println!(&quot;struct Line serializes into string {}&quot;, lines);
+    let lines = bincode::serialize(&amp;line).unwrap();
+    println!(&quot;struct Line serializes into byte array {:?}&quot;, lines);
+
+    let lined: Line = bincode::deserialize(&amp;lines).unwrap();
+    assert_eq!(lined.desc, &quot;a thin line&quot;);
+    assert_eq!(lined.points[1].x, 3.0);
+}
+</code></pre>
+<p>Result</p>
+<pre><code>struct Point serializes into byte array [0, 0, 128, 63, 0, 0, 0, 64]
+struct Point serializes into byte array [0, 0, 64, 64, 0, 0, 128, 64]
+struct Line serializes into byte array [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 64, 0, 0, 64, 64, 0, 0, 128, 64, 1, 243, 4, 53, 64, 11, 0, 0, 0, 0, 0, 0, 0, 97, 32, 116, 104, 105, 110, 32, 108, 105, 110, 101]
+</code></pre>
+<h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+</span><span class="boring">extern crate num;
+</span>
+use num::bigint::ToBigInt;
+
+fn main() {
+    let a = 3.to_bigint().unwrap();
+    let x = num::pow(a, 247);
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;3**247 is {}&quot;, xs);
 }
 </code></pre></pre>
-<p>As an exercise, please edit the code above, deserialize the bytes back into a <code>Line</code> struct, and check its internal values are all correct!</p>
-<h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
 <h1><a class="header" href="#random-numbers" id="random-numbers">Random numbers</a></h1>
 <h1><a class="header" href="#get-a-random-number" id="get-a-random-number">Get a random number</a></h1>
 <h1><a class="header" href="#fill-an-array-with-random-numbers" id="fill-an-array-with-random-numbers">Fill an array with random numbers</a></h1>
