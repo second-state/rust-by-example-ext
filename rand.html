@@ -157,8 +157,8 @@ rand = &quot;0.7.3&quot;
 </code></pre>
 <h2><a class="header" href="#get-a-random-number" id="get-a-random-number">Get a random number</a></h2>
 <p>To get a random number, you can simply do the following.</p>
-<pre><pre class="playpen"><code class="language-rust editable">use rand;
-
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+</span>
 fn main() {
     let i: i32 = rand::random();
     println!(&quot;The random i32 is {}&quot;, i);
