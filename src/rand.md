@@ -15,7 +15,7 @@ rand = "0.7.3"
 To get a random number, you can simply do the following.
 
 ```rust,editable
-use rand;
+# extern crate rand;
 
 fn main() {
     let i: i32 = rand::random();
