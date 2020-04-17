@@ -1,5 +1,7 @@
 # Rust By Example -- Extended Edition
 
+![Build and Publish](https://github.com/second-state/rust-by-example-ext/workflows/Build%20and%20Publish/badge.svg)
+
 Learn Rust with examples. This book is the sister book for the [Rust By Example](https://doc.rust-lang.org/rust-by-example/) book, 
 which covers core Rust language features and standard libraries. This book, being the Extended Edition, focuses on commonly
 used 3rd party libraries and tools.
