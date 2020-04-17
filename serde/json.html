@@ -194,6 +194,41 @@ fn main() {
     println!(&quot;nested tuple serializes into string {}&quot;, xs);
 }
 </code></pre></pre>
+<p>What about structs and other custom Rust data types? Well, you just need to annotate them and they will automagically get serialization capabilities! Run the example below and you can see the JSON string representation of these Rust structs.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+</span>
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Point {
+  x: f32,
+  y: f32
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Line {
+  points: Vec&lt;Point&gt;,
+  valid: bool,
+  length: f32,
+  desc: String
+}
+
+fn main() {
+    let point1: Point = Point {x:1.0, y:2.0};
+    let point2: Point = Point {x:3.0, y:4.0};
+    let point1s = serde_json::to_string(&amp;point1).unwrap();
+    let point2s = serde_json::to_string(&amp;point2).unwrap();
+    println!(&quot;struct Point serializes into string {}&quot;, point1s);
+    println!(&quot;struct Point serializes into string {}&quot;, point2s);
+
+    let length = ((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y)).sqrt();
+    let valid = if length == 0.0 { false } else { true };
+    let line = Line { points: vec![point1, point2], valid: valid, length: length, desc: &quot;a thin line&quot;.to_string() };
+    let lines = serde_json::to_string(&amp;line).unwrap();
+    println!(&quot;struct Line serializes into string {}&quot;, lines);
+}
+</code></pre></pre>
+<p>As an exercise, please edit the code above, deserialize the JSON string back into a <code>Line</code> struct, and check its internal values are all correct!</p>
 
                     </main>
 
