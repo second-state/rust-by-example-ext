@@ -454,7 +454,7 @@ use rand::Rng;
 
 fn main() {
     let mut rng = thread_rng();
-    let y: f64 = rng.gen_range(-10.0, 10.0)
+    let y: f64 = rng.gen_range(-10.0, 10.0);
     println!(&quot;Number from -10. to 10.: {}&quot;, y);
     println!(&quot;Number from 0 to 9: {}&quot;, rng.gen_range(0, 10));
 }
@@ -484,7 +484,7 @@ use rand::Rng;
 
 fn main() {
     let mut arr = [0i32; 9];
-    thread_rng().try_fill(&amp;mut arr[..])?;
+    thread_rng().try_fill(&amp;mut arr[..]);
     println!(&quot;Random number array {:?}&quot;, arr);
 }
 </code></pre></pre>
@@ -492,6 +492,9 @@ fn main() {
 from a probability distribution.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
+use rand::thread_rng;
+use rand::Rng;
+
 fn main() {
     let mut rng = thread_rng();
     let distr = rand::distributions::Uniform::new_inclusive(1, 100);
