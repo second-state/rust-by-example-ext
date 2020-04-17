@@ -172,6 +172,12 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
 </li>
 </ul>
 <h1><a class="header" href="#serialization-and-deserialization" id="serialization-and-deserialization">Serialization and deserialization</a></h1>
+<p>Serialization is a core language feature in the era of web applications. When one program needs to talk to another program
+over the Internet, it needs to serialize its data into a format that can be transmitted through the network. The receiving
+program uses deserialization to reconstruct the data.</p>
+<p>In Rust, most applications use the <a href="https://crates.io/crates/serde"><code>serde</code></a> crate to manage serialization and deserialization. In this chapter, we will cover how to serialize typed Rust data into <a href="serde/json.html">JSON strings</a> 
+or <a href="serde/binary.html">byte arrays</a>. We will also discuss how to serialize third party structs in libraries.</p>
+<p>Checkout the <a href="https://serde.rs/">offical documentation</a> for the <code>serde</code> crate.</p>
 <h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
 <h1><a class="header" href="#serialize-into-binary" id="serialize-into-binary">Serialize into binary</a></h1>
 <h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
