@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item expanded "><a href="rand.html" class="active"><strong aria-hidden="true">2.</strong> Random numbers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="rand/number.html"><strong aria-hidden="true">2.1.</strong> Get a number</a></li><li class="chapter-item "><a href="rand/array.html"><strong aria-hidden="true">2.2.</strong> Fill an array</a></li><li class="chapter-item "><a href="rand/webassembly.html"><strong aria-hidden="true">2.3.</strong> WebAssembly randomness</a></li></ol></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">3.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">3.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">3.2.</strong> Run</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">3.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">3.4.</strong> Node.js host</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item expanded "><a href="rand.html" class="active"><strong aria-hidden="true">2.</strong> Random numbers</a></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">3.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">3.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">3.2.</strong> Run</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">3.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">3.4.</strong> Node.js host</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -164,6 +164,87 @@ fn main() {
     println!(&quot;The random i32 is {}&quot;, i);
 }
 </code></pre></pre>
+<p>The <code>random()</code> is smart enough to know the primitive type it is <strong>supposed</strong> to generate. Check out the example below.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+</span>
+fn main() {
+    let x: u8 = rand::random();
+    println!(&quot;The random u8 is {}&quot;, x);
+
+    let x: f64 = rand::random();
+    println!(&quot;The random f64 is {}&quot;, x);
+
+    let x = rand::random();
+    println!(&quot;By default, it generates a boolean {}&quot;, x);
+}
+</code></pre></pre>
+<p>What about generating a random number within a range? For that, you need to
+create a random number generator and call its <code>gen_range()</code> function.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+</span>
+fn main() {
+    let mut rng = thread_rng();
+    let y: f64 = rng.gen_range(-10.0, 10.0)
+    println!(&quot;Number from -10. to 10.: {}&quot;, y);
+    println!(&quot;Number from 0 to 9: {}&quot;, rng.gen_range(0, 10));
+}
+</code></pre></pre>
+<h2><a class="header" href="#get-a-series-of-random-numbers" id="get-a-series-of-random-numbers">Get a series of random numbers</a></h2>
+<p>In order to get a series of random numbers, you could call the <code>random()</code> function
+multiple times. But that is slow since every time it needs to instantiate and seed
+a new random number generator. It is faster to create the generator once and 
+call its <code>gen()</code> function repeatedly.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+</span>
+fn main() {
+    let mut rng = thread_rng();
+    for i in 1..10 {
+        println!(&quot;Random number #{}: {}&quot;, i, rng.gen_range(0, 100));
+    }
+}
+</code></pre></pre>
+<p>The generator can quickly fill an array with random integers.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+</span>
+fn main() {
+    let mut arr = [0i32; 9];
+    thread_rng().try_fill(&amp;mut arr[..])?;
+    println!(&quot;Random number array {:?}&quot;, arr));
+}
+</code></pre></pre>
+<p>Another neat feature of the generator is that it can generate random numbers 
+from a probability distribution.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+</span>
+fn main() {
+    let mut rng = thread_rng();
+    let distr = rand::distributions::Uniform::new_inclusive(1, 100);
+    let mut nums = [0i32; 3];
+    for x in &amp;mut nums {
+        *x = rng.sample(distr);
+    }
+    println!(&quot;Some numbers: {:?}&quot;, nums);
+}
+</code></pre></pre>
+<h2><a class="header" href="#webassembly" id="webassembly">WebAssembly</a></h2>
+<p>Under the hood, the <code>rand</code> crate uses the operating system's native random
+functions to seed the random number generator. This initial entropy seed
+comes from the hardware noise. However, when Rust programs inside virtual
+machines like WebAssembly, it does not have access to native random hardware.</p>
+<p>When the <code>rand</code> crate is compiled for WebAssembly, it has a special feature
+to use JavaScript's random function to seed the generator. This works when
+your WebAssembly application is running inside a JavaScript host, such as in
+a web browser or in Node.js. To enable that, do the following in your <code>Cargo.toml</code>.</p>
+<pre><code>[dependencies]
+rand = { version = &quot;0.7.3&quot;, features = [&quot;wasm-bindgen&quot;] }
+</code></pre>
+<p>Then you must use one of the <a href="https://rustwasm.github.io/docs/wasm-bindgen/"><code>wasm-bindgen</code></a> compatible tools to instrument 
+your Rust code to call external JavaScript and a JavaScript shim to be called 
+from Rust.</p>
+<ul>
+<li>The <a href="https://www.npmjs.com/package/ssvmup"><code>ssvmup</code></a> and <a href="https://www.npmjs.com/package/ssvm"><code>ssvm</code></a> tools enable high performance Rust + JavaScript hybrid applications in Node.js. <a href="https://cloud.secondstate.io/server-side-webassembly/getting-started">Check out this tutorial</a>.</li>
+<li>The <a href="https://rustwasm.github.io/wasm-pack/"><code>wasm-pack</code></a> tool can generate Rust and JavaScript code for the V8 engine.</li>
+</ul>
 
                     </main>
 
@@ -176,7 +257,7 @@ fn main() {
                         
 
                         
-                            <a rel="next" href="rand/number.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="webassembly.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -194,7 +275,7 @@ fn main() {
                 
 
                 
-                    <a rel="next" href="rand/number.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="webassembly.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
