@@ -179,6 +179,16 @@ program uses deserialization to reconstruct the data.</p>
 or <a href="serde/binary.html">byte arrays</a>. We will also discuss how to serialize third party structs in libraries.</p>
 <p>Checkout the <a href="https://serde.rs/">offical documentation</a> for the <code>serde</code> crate.</p>
 <h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+</span>
+fn main() {
+    let x: i32 = 5;
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;i32 number {} serializes into string {}&quot;, x, xs);
+    let xd: i32 = serde_json::from_str(&amp;xs).unwrap();
+    assert_eq!(x, xd);
+}
+</code></pre></pre>
 <h1><a class="header" href="#serialize-into-binary" id="serialize-into-binary">Serialize into binary</a></h1>
 <h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
 <h1><a class="header" href="#random-numbers" id="random-numbers">Random numbers</a></h1>

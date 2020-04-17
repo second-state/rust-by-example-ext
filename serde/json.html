@@ -148,6 +148,16 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+</span>
+fn main() {
+    let x: i32 = 5;
+    let xs = serde_json::to_string(&amp;x).unwrap();
+    println!(&quot;i32 number {} serializes into string {}&quot;, x, xs);
+    let xd: i32 = serde_json::from_str(&amp;xs).unwrap();
+    assert_eq!(x, xd);
+}
+</code></pre></pre>
 
                     </main>
 
