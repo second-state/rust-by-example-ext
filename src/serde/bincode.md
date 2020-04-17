@@ -12,7 +12,7 @@ Note: Since the `bincode` crate is not included the Rust Playground by default, 
 
 The example below shows how to serialize a simple Rust primitive data type `i32` into a byte array, and then deserialize it back. You can pass this byte array to other Rust programs over the Internet.
 
-```
+```rust,noplaypen
 use bincode;
 
 fn main() {
@@ -32,7 +32,7 @@ i32 number 5 serializes into byte array [5, 0, 0, 0]
 
 Here are more examples showing the serialization and deserialization of Rust primitive data types. Edit the code below to try more Rust types, and run it to see the results.
 
-```rust
+```rust,noplaypen
 use bincode;
 
 fn main() {
@@ -83,7 +83,7 @@ nested tuple ((1, 2), (3.141, 'a'), true) serializes into byte array [1, 2, 0, 3
 
 What about structs and other custom Rust data types? Well, you just need to annotate them with `serde` and they will automagically get serialization capabilities!
 
-```
+```rust,noplaypen
 use serde::{Serialize, Deserialize};
 use bincode;
 
