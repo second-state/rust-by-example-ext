@@ -25,6 +25,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./book
+        cname: rust-by-example-ext.com
         
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
