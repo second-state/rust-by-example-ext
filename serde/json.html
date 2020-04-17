@@ -154,8 +154,9 @@ serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
 serde_json = &quot;1.0&quot;
 </code></pre>
 <p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a JSON string, and then deserialize it back. Run it! You can pass this JSON string to other Rust programs or Internet applications written in other languages.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
-</span>
+<pre><pre class="playpen"><code class="language-rust editable">use serde;
+use serde_json;
+
 fn main() {
     let x: i32 = 5;
     let xs = serde_json::to_string(&amp;x).unwrap();

@@ -148,6 +148,22 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#random-numbers" id="random-numbers">Random numbers</a></h1>
+<p>A lot of applications require random numbers. The <a href="https://crates.io/crates/rand"><code>rand</code></a> crate is a very popular library in Rust to generate random numbers. 
+It supports a wide variety of random number generators and distributions, each with a different performance and security trade off. 
+For more details, you can read the <a href="https://rust-random.github.io/book/intro.html">Rust Rand Book</a>.
+To use the <code>rand</code> crate, just do the following in your <code>Cargo.toml</code> file.</p>
+<pre><code>[dependencies]
+rand = &quot;0.7.3&quot;
+</code></pre>
+<h2><a class="header" href="#get-a-random-number" id="get-a-random-number">Get a random number</a></h2>
+<p>To get a random number, you can simply do the following.</p>
+<pre><pre class="playpen"><code class="language-rust editable">use rand;
+
+fn main() {
+    let i: i32 = rand::random();
+    println!(&quot;The random i32 is {}&quot;, i);
+}
+</code></pre></pre>
 
                     </main>
 

@@ -153,7 +153,9 @@
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
 bincode = &quot;1.2.1&quot;
 </code></pre>
-<p>Note: Since the <code>bincode</code> crate is not included the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/bincode">this cargo project</a>.</p>
+<blockquote>
+<p><strong>Note:</strong> Since the <code>bincode</code> crate is not included the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/bincode">this cargo project</a>.</p>
+</blockquote>
 <p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a byte array, and then deserialize it back. You can pass this byte array to other Rust programs over the Internet.</p>
 <pre><code class="language-rust noplaypen">use bincode;
 

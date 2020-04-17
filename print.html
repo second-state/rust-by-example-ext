@@ -159,6 +159,9 @@ third party libraries and crates. It is designed to complement the official
 <a href="https://doc.rust-lang.org/rust-by-example/">Rust by Example (RBE)</a> book that focuses on the 
 core language and standard libraries.
 Additionally for the curious, you can also <a href="https://github.com/second-state/rust-by-example-ext">check out the source code for this site</a>.</p>
+<blockquote>
+<p><strong>Note:</strong> Many examples in this book are directly runnable from the web page. Just click on the triangle button at the top right of an example and the results are displayed under it. However, the <a href="https://play.rust-lang.org/">Rust playground</a> does not support all third party crates. It supports <a href="https://github.com/integer32llc/rust-playground/blob/master/compiler/base/Cargo.toml">the top 100</a>. For crates or features that are not supported by the playground, the code exmple would NOT be runnable on the page. In that case, we show the results next to the examples, and link to <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/">cargo project source code</a> for the example.</p>
+</blockquote>
 <p>Now let's begin!</p>
 <ul>
 <li>
@@ -185,8 +188,9 @@ serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
 serde_json = &quot;1.0&quot;
 </code></pre>
 <p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a JSON string, and then deserialize it back. Run it! You can pass this JSON string to other Rust programs or Internet applications written in other languages.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
-</span>
+<pre><pre class="playpen"><code class="language-rust editable">use serde;
+use serde_json;
+
 fn main() {
     let x: i32 = 5;
     let xs = serde_json::to_string(&amp;x).unwrap();
@@ -274,7 +278,9 @@ fn main() {
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
 bincode = &quot;1.2.1&quot;
 </code></pre>
-<p>Note: Since the <code>bincode</code> crate is not included the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/bincode">this cargo project</a>.</p>
+<blockquote>
+<p><strong>Note:</strong> Since the <code>bincode</code> crate is not included the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/bincode">this cargo project</a>.</p>
+</blockquote>
 <p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a byte array, and then deserialize it back. You can pass this byte array to other Rust programs over the Internet.</p>
 <pre><code class="language-rust noplaypen">use bincode;
 
@@ -386,7 +392,9 @@ serde_json = &quot;1.0&quot;
 num-bigint = { version = &quot;0.2&quot;, features = [&quot;serde&quot;] }
 num = &quot;0.2&quot;
 </code></pre>
-<p>Note: Since the <code>serde</code> feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature">this cargo project</a>.</p>
+<blockquote>
+<p><strong>Note:</strong> Since the <code>serde</code> feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature">this cargo project</a>.</p>
+</blockquote>
 <p>The example below shows how to serialize and deserialize a <code>BigInt</code> struct type from the <code>num_bigint</code> crate. It just works out of the box.</p>
 <pre><code class="language-rust noplaypen">use num::bigint::ToBigInt;
 use num_bigint::BigInt;
@@ -408,7 +416,23 @@ fn main() {
 The <code>serde</code> crate provides another approach called <a href="https://serde.rs/remote-derive.html">remote derive</a>. Basically, you create a local copy of the remote type
 and then serialize the local type through a bridge. Check out the <a href="https://serde.rs/remote-derive.html">documentation</a>.</p>
 <h1><a class="header" href="#random-numbers" id="random-numbers">Random numbers</a></h1>
-<h1><a class="header" href="#get-a-random-number" id="get-a-random-number">Get a random number</a></h1>
+<p>A lot of applications require random numbers. The <a href="https://crates.io/crates/rand"><code>rand</code></a> crate is a very popular library in Rust to generate random numbers. 
+It supports a wide variety of random number generators and distributions, each with a different performance and security trade off. 
+For more details, you can read the <a href="https://rust-random.github.io/book/intro.html">Rust Rand Book</a>.
+To use the <code>rand</code> crate, just do the following in your <code>Cargo.toml</code> file.</p>
+<pre><code>[dependencies]
+rand = &quot;0.7.3&quot;
+</code></pre>
+<h2><a class="header" href="#get-a-random-number" id="get-a-random-number">Get a random number</a></h2>
+<p>To get a random number, you can simply do the following.</p>
+<pre><pre class="playpen"><code class="language-rust editable">use rand;
+
+fn main() {
+    let i: i32 = rand::random();
+    println!(&quot;The random i32 is {}&quot;, i);
+}
+</code></pre></pre>
+<h1><a class="header" href="#get-a-random-number-1" id="get-a-random-number-1">Get a random number</a></h1>
 <h1><a class="header" href="#fill-an-array-with-random-numbers" id="fill-an-array-with-random-numbers">Fill an array with random numbers</a></h1>
 <h1><a class="header" href="#use-the-rand-crate-in-webassembly" id="use-the-rand-crate-in-webassembly">Use the rand crate in WebAssembly</a></h1>
 <h1><a class="header" href="#webassembly" id="webassembly">WebAssembly</a></h1>

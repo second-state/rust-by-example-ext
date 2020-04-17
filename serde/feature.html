@@ -157,7 +157,9 @@ serde_json = &quot;1.0&quot;
 num-bigint = { version = &quot;0.2&quot;, features = [&quot;serde&quot;] }
 num = &quot;0.2&quot;
 </code></pre>
-<p>Note: Since the <code>serde</code> feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature">this cargo project</a>.</p>
+<blockquote>
+<p><strong>Note:</strong> Since the <code>serde</code> feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature">this cargo project</a>.</p>
+</blockquote>
 <p>The example below shows how to serialize and deserialize a <code>BigInt</code> struct type from the <code>num_bigint</code> crate. It just works out of the box.</p>
 <pre><code class="language-rust noplaypen">use num::bigint::ToBigInt;
 use num_bigint::BigInt;
