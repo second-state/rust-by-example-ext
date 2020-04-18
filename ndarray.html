@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Third party crates - Rust By Example -- Extended Edition</title>
+        <title>N-dimensional array - Rust By Example -- Extended Edition</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -11,21 +11,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -35,7 +35,7 @@
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "../";
+            var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
         </script>
 
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="../serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="../serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item expanded "><a href="../serde/feature.html" class="active"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="../rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a></li><li class="chapter-item "><a href="../ndarray.html"><strong aria-hidden="true">3.</strong> N-dimensional array</a></li><li class="chapter-item "><a href="../webassembly.html"><strong aria-hidden="true">4.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../webassembly/compile.html"><strong aria-hidden="true">4.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="../webassembly/run.html"><strong aria-hidden="true">4.2.</strong> Run</a></li><li class="chapter-item "><a href="../webassembly/browser.html"><strong aria-hidden="true">4.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="../webassembly/nodejs.html"><strong aria-hidden="true">4.4.</strong> Node.js host</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a></li><li class="chapter-item expanded "><a href="ndarray.html" class="active"><strong aria-hidden="true">3.</strong> N-dimensional array</a></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">4.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">4.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">4.2.</strong> Run</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">4.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">4.4.</strong> Node.js host</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -116,7 +116,7 @@
                     <h1 class="menu-title">Rust By Example -- Extended Edition</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
@@ -147,52 +147,100 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
-<p>Many third party Rust crates already support serialization and deserialization
-via the <code>serde</code> crate. You just need to enable the <code>serde</code> feature when you 
-declare the crate as dependency.</p>
+                        <h1><a class="header" href="#n-dimensional-array" id="n-dimensional-array">N-dimensional array</a></h1>
+<p>The N-dimensional array is a widely used data structure for scientific 
+computing and data analysis. The <a href="https://crates.io/crates/ndarray"><code>ndarray</code></a> crate provides support for
+N-dimensional array in Rust. It is widely used by other crates.
+To use the <code>ndarray</code> crate, just do the following in your <code>Cargo.toml</code> file.</p>
 <pre><code>[dependencies]
-serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
-serde_json = &quot;1.0&quot;
-num-bigint = { version = &quot;0.2&quot;, features = [&quot;serde&quot;] }
-num = &quot;0.2&quot;
+ndarray = &quot;0.13.0&quot;
 </code></pre>
-<blockquote>
-<p><strong>Note:</strong> Since the <code>serde</code> feature is not enabled on third party crates in the Rust Playground by default, the code examples in this article are not interactive. We will show the program output in the text. You can run these examples from <a href="https://github.com/second-state/rust-by-example-ext/tree/master/examples/serde/feature">this cargo project</a>.</p>
-</blockquote>
-<p>The example below shows how to serialize and deserialize a <code>BigInt</code> struct type from the <code>num_bigint</code> crate. It just works out of the box.</p>
-<pre><code class="language-rust noplaypen">use num::bigint::ToBigInt;
-use num_bigint::BigInt;
+<h2><a class="header" href="#basic-operations" id="basic-operations">Basic operations</a></h2>
+<p>To create a 3-D array, and access one of its element by index, do the following.
+The example creates a 3x4x5 array, and we access its elements using the 
+<code>[[i, j, k]]</code> notation, where <code>i j k</code> are index positions for the element.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+</span>
+use ndarray::Array3;
 
 fn main() {
-    let a = 3.to_bigint().unwrap();
-    let x = num::pow(a, 247);
-    let xs = serde_json::to_string(&amp;x).unwrap();
-    let xd: BigInt = serde_json::from_str(&amp;xs).unwrap();
-    assert_eq!(x, xd);
-
-    println!(&quot;3**247 is {} and serializes to {}&quot;, x, xs);
+    let mut a3 = Array3::&lt;f64&gt;::zero((3, 4, 5));
+    a3[[0, 0, 0]] = 0.0;
+    a3[[1, 1, 1]] = 1.0;
+    a3[[2, 2, 2]] = 2.0;
+    println!(&quot;The 3D array is {:?}&quot;, a3);
 }
-</code></pre>
-<p>Result</p>
-<pre><code>3**247 is 7062361041362837614435796717454722507454089864783271756927542774477268334591598635421519542453366332460075473278915787 and serializes to [1,[3323516107,3672165520,4080039719,3245710364,216105283,4292129601,4006727268,340573034,2851604588,3366124224,3797961372,1024846073,179]]
-</code></pre>
-<p>What about third party crates that are not yet to support the <code>serde</code> feature?
-The <code>serde</code> crate provides another approach called <a href="https://serde.rs/remote-derive.html">remote derive</a>. Basically, you create a local copy of the remote type
-and then serialize the local type through a bridge. Check out the <a href="https://serde.rs/remote-derive.html">documentation</a>.</p>
+</code></pre></pre>
+<p>Here is another example of a 3x3 2D array.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+</span>
+use ndarray::Array2;
+
+fn main() {
+    let mut a2 = Array2::&lt;f64&gt;::zero((3, 3));
+    a2[[0, 0]] = 0.0;
+    a2[[0, 1]] = 0.5;
+    a2[[0, 2]] = -0.5;
+    a2[[1, 0]] = 1.0;
+    a2[[1, 1]] = 1.5;
+    a2[[1, 2]] = -1.5;
+    a2[[2, 0]] = 2.0;
+    a2[[2, 1]] = 2.5;
+    a2[[2, 2]] = -2.5;
+    println!(&quot;The 2D array is {:?}&quot;, a2);
+}
+</code></pre></pre>
+<p>Manually setting array elements by index positions is tedious. Next, let's see a better way to do this.</p>
+<h2><a class="header" href="#create-arrays" id="create-arrays">Create arrays</a></h2>
+<p>The <code>arr2</code> and <code>arr3</code> macros allow you to create 2D and 3D arrays quickly.</p>
+<p>The example creates a 3x3 2D array.</p>
+<ul>
+<li>The array has 3 rows <code>[row0, row1, row2]</code>. For example, <code>row0</code> is <code>[1, 2, 3]</code>.</li>
+<li>Each row has 3 columns <code>col0, col1, col2</code>. For example, <code>row0 col0</code> is <code>1</code>.</li>
+</ul>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+</span>
+use ndarray::arr2;
+
+fn main() {
+    let a2 = arr2(&amp;[[1, 2, 3],
+                    [4, 5, 6],
+                    [7, 8, 9]]);
+    a2[[2, 1]] = 10;
+    println!(&quot;The 2D array is {:?}&quot;, a2);
+}
+</code></pre></pre>
+<p>The example creates a 3x2x2 3D array. </p>
+<ul>
+<li>The array has 3 rows <code>[row0, row1, row2]</code>. For example, <code>row0</code> is <code>[[1, 2], [3, 4]]</code>.</li>
+<li>Each row has 2 columns <code>[col0, col1]</code>. For example, <code>row0 col0</code> is <code>[1, 2]</code>.</li>
+<li>Each column has 2 levels <code>lvl0, lvl1</code>. For example, <code>row0 col0 lvl0</code> is <code>1</code>. </li>
+</ul>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+</span>
+use ndarray::arr3;
+
+fn main() {
+    let a3 = arr3(&amp;[[[1, 2], [3, 4]],
+                    [[5, 6], [7, 8]],
+                    [[9, 0], [1, 2]]]);
+    a3[[2, 1, 1]] = 10;
+    println!(&quot;The 3D array is {:?}&quot;, a3);
+}
+</code></pre></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../serde/bincode.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="rand.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../rand.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="webassembly.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -204,13 +252,13 @@ and then serialize the local type through a bridge. Check out the <a href="https
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../serde/bincode.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="rand.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../rand.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="webassembly.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -231,22 +279,22 @@ and then serialize the local type through a bridge. Check out the <a href="https
         
 
         
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
         
 
         
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         
