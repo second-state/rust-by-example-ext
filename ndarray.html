@@ -164,7 +164,7 @@ The example creates a 3x4x5 array, and we access its elements using the
 use ndarray::Array3;
 
 fn main() {
-    let mut a3 = Array3::&lt;f64&gt;::zero((3, 4, 5));
+    let mut a3 = Array3::&lt;f64&gt;::zeros((3, 4, 5));
     a3[[0, 0, 0]] = 0.0;
     a3[[1, 1, 1]] = 1.0;
     a3[[2, 2, 2]] = 2.0;
@@ -177,7 +177,7 @@ fn main() {
 use ndarray::Array2;
 
 fn main() {
-    let mut a2 = Array2::&lt;f64&gt;::zero((3, 3));
+    let mut a2 = Array2::&lt;f64&gt;::zeros((3, 3));
     a2[[0, 0]] = 0.0;
     a2[[0, 1]] = 0.5;
     a2[[0, 2]] = -0.5;
@@ -203,7 +203,7 @@ fn main() {
 use ndarray::arr2;
 
 fn main() {
-    let a2 = arr2(&amp;[[1, 2, 3],
+    let mut a2 = arr2(&amp;[[1, 2, 3],
                     [4, 5, 6],
                     [7, 8, 9]]);
     a2[[2, 1]] = 10;
@@ -221,7 +221,7 @@ fn main() {
 use ndarray::arr3;
 
 fn main() {
-    let a3 = arr3(&amp;[[[1, 2], [3, 4]],
+    let mut a3 = arr3(&amp;[[[1, 2], [3, 4]],
                     [[5, 6], [7, 8]],
                     [[9, 0], [1, 2]]]);
     a3[[2, 1, 1]] = 10;
