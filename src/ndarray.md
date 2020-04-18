@@ -22,7 +22,7 @@ The example creates a 3x4x5 array, and we access its elements using the
 use ndarray::Array3;
 
 fn main() {
-    let mut a3 = Array3::<f64>::zero((3, 4, 5));
+    let mut a3 = Array3::<f64>::zeros((3, 4, 5));
     a3[[0, 0, 0]] = 0.0;
     a3[[1, 1, 1]] = 1.0;
     a3[[2, 2, 2]] = 2.0;
@@ -38,7 +38,7 @@ Here is another example of a 3x3 2D array.
 use ndarray::Array2;
 
 fn main() {
-    let mut a2 = Array2::<f64>::zero((3, 3));
+    let mut a2 = Array2::<f64>::zeros((3, 3));
     a2[[0, 0]] = 0.0;
     a2[[0, 1]] = 0.5;
     a2[[0, 2]] = -0.5;
@@ -69,7 +69,7 @@ The example creates a 3x3 2D array.
 use ndarray::arr2;
 
 fn main() {
-    let a2 = arr2(&[[1, 2, 3],
+    let mut a2 = arr2(&[[1, 2, 3],
                     [4, 5, 6],
                     [7, 8, 9]]);
     a2[[2, 1]] = 10;
@@ -89,7 +89,7 @@ The example creates a 3x2x2 3D array.
 use ndarray::arr3;
 
 fn main() {
-    let a3 = arr3(&[[[1, 2], [3, 4]],
+    let mut a3 = arr3(&[[[1, 2], [3, 4]],
                     [[5, 6], [7, 8]],
                     [[9, 0], [1, 2]]]);
     a3[[2, 1, 1]] = 10;
