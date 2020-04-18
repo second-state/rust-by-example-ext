@@ -8,6 +8,8 @@
     - [Third party crates](serde/feature.md)
 
 - [Random numbers](rand.md)
+
+- [N-dimensional array](ndarray.md)
     
 - [WebAssembly](webassembly.md)
     - [Compile targets](webassembly/compile.md)
