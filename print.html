@@ -735,7 +735,8 @@ lazy_static = &quot;1.4.0&quot;
 </code></pre>
 <p>The example below shows three static variables that must be initialized
 by code after the program starts.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate lazy_static;
+<pre><pre class="playpen"><code class="language-rust editable">#[macro_use]
+<span class="boring">extern crate lazy_static;
 </span>
 use std::collections::HashMap;
 
