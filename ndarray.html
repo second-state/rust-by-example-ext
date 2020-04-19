@@ -229,8 +229,11 @@ fn main() {
 }
 </code></pre></pre>
 <h2><a class="header" href="#iterate-through-the-arrays" id="iterate-through-the-arrays">Iterate through the arrays</a></h2>
-<p>Using the <code>genrows()</code> function, you can deconstruct the <code>n</code> dimension array 
-into an 1D array of <code>n-1</code> dimension arrays.</p>
+<p>Using the <code>genrows()</code> function, you can flatten the <code>n</code> dimension array into an 
+array of rows. Each row contains a simple (one dimension) array of values
+along the original array's shortest axis.</p>
+<p>Using the <code>outer_iter()</code> function, you can deconstruct the <code>n</code> dimension array 
+into a simple (one dimension) array of <code>n-1</code> dimension arrays.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
 </span>
 use ndarray::arr3;
@@ -240,12 +243,11 @@ fn main() {
                     [[5, 6], [7, 8]],
                     [[9, 0], [1, 2]]]);
     for row in a3.genrows() {
-        // Each row is a 2D array
-        println!(&quot;2D array is {:?}&quot;, row);
-        for r in row.genrows() {
-            // Each r is an 1D array
-            println!(&quot;1D array is {:?}&quot;, r);
-        }
+        // Each row is a 1D array
+        println!(&quot;row is {:?}&quot;, row);
+    }
+    for a2 in a3.outer_iter() {
+        println!(&quot;2D array is {:?}&quot;, a2);
     }
 }
 </code></pre></pre>
