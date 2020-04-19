@@ -9,6 +9,9 @@
 
 - [Random numbers](rand.md)
 
+- [Public key cryptography with the OpenSSL](openssl.md)
+    - [RSA public key encyrption](openssl/rsa.md)
+
 - [N-dimensional array](ndarray.md)
     
 - [WebAssembly](webassembly.md)
