@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>RSA public key encyrption - Rust By Example -- Extended Edition</title>
+        <title>RSA - Rust By Example -- Extended Edition</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">Introduction</a></li><li class="chapter-item "><a href="../serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="../serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="../serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="../rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a></li><li class="chapter-item expanded "><a href="../openssl.html"><strong aria-hidden="true">3.</strong> Public key cryptography with the OpenSSL</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../openssl/rsa.html" class="active"><strong aria-hidden="true">3.1.</strong> RSA public key encyrption</a></li></ol></li><li class="chapter-item "><a href="../ndarray.html"><strong aria-hidden="true">4.</strong> N-dimensional array</a></li><li class="chapter-item "><a href="../webassembly.html"><strong aria-hidden="true">5.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../webassembly/compile.html"><strong aria-hidden="true">5.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="../webassembly/run.html"><strong aria-hidden="true">5.2.</strong> Run</a></li><li class="chapter-item "><a href="../webassembly/browser.html"><strong aria-hidden="true">5.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="../webassembly/nodejs.html"><strong aria-hidden="true">5.4.</strong> Node.js host</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="../index.html">Introduction</a></li><li class="chapter-item "><a href="../serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="../serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="../serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="../rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a></li><li class="chapter-item expanded "><a href="../openssl.html"><strong aria-hidden="true">3.</strong> SSL/TLS toolkit</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../openssl/rsa.html" class="active"><strong aria-hidden="true">3.1.</strong> RSA</a></li></ol></li><li class="chapter-item "><a href="../ndarray.html"><strong aria-hidden="true">4.</strong> N-dimensional array</a></li><li class="chapter-item "><a href="../webassembly.html"><strong aria-hidden="true">5.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../webassembly/compile.html"><strong aria-hidden="true">5.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="../webassembly/run.html"><strong aria-hidden="true">5.2.</strong> Run</a></li><li class="chapter-item "><a href="../webassembly/browser.html"><strong aria-hidden="true">5.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="../webassembly/nodejs.html"><strong aria-hidden="true">5.4.</strong> Node.js host</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -153,7 +153,8 @@
 openssl = &quot;0.10.28&quot;
 </code></pre>
 <p>The example below generates an RSA public and private key pair, and
-encrypt the keys with a phassphrase.</p>
+encrypts the keys with a phassphrase. The outputs are text strings that
+can be saved into files. Those files are called PEM (Privacy Enhanced Mail) files.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate openssl;
 </span>
 use openssl::rsa::{Rsa, Padding};
@@ -170,31 +171,56 @@ fn main() {
     println!(&quot;Public key: {}&quot;, String::from_utf8(public_key).unwrap());
 }
 </code></pre></pre>
-<p>Next, we can import a public key from the PEM document, and use it to encrypt
-some data.</p>
+<p>Next, we can import public and private keys from the PEM document.
+In the example, we demonstrate how to encrypt a byte array of data using the
+public key. Such encrypted data can only be decrypted by the correspding private key.</p>
 <pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate openssl;
 </span>
 use openssl::rsa::{Rsa, Padding};
-use openssl::symm::Cipher;
 
 fn main() {
     let passphrase = &quot;rust_by_example&quot;;
-    let public_key_pem = &quot;1234&quot;;
-    let private_key_pem = &quot;1234&quot;;
+    
+    let public_key_pem = &quot;-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC+Jx89MjzbWw9PPh0dffD+i2c
+J7XMioLndImQvQiNJjZ00zyxjgt4+wkual+ZHhH94HIjRIeLI+ncBEjFMa1xIzHT
+exz/pvJUCsHNxNK9958zR0E997xxSf3C2Lu8BWtJG348xd5QNzb+R+i963PtcAsQ
+fCu+q5gbqqtQEIjlMwIDAQAB
+-----END PUBLIC KEY-----&quot;;
+
+    let private_key_pem = &quot;-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,43371B6CECDB096AC2A362FD33BF4B07
+
+aIs3x9UBN95VJJFsd1ddYxmwAKQdFE5BJwZVYtidV+cZ4Qpmg9tdBLm8AhF5bVGR
+FzAVMxTEFQgwT4o2jH2UxRkRmChwNy6aqdGteDIK6yXQK7//GMmxhbvqMmFzwdof
+2E7Jkq3BQQEqMFu2CxRUPUFYRIebEIZSDCD3PoJ6p7a77qwm/KCXCbad/DqtOGkJ
+wOkPH5AXLIu02MJfs+vcLswXFMlq7aaUrAv5WGt1SpKz9Co6bplSYDG7JE+906Uw
+MIg4XDJTJDKCKyDaPkMydw6StvyNuZfIYUNIofulLci7yoNEGvwQHsHCaHr6n4bt
+I4iC9CbkEcPbf06HAWGFfsexeLGf9mU0HVsZi83QdMhWMbOREakFU755AMvTeB8w
+IMCNn55nzJlSHooKuvJAmbqBBb4+wqgwnoYQEVZmTDZxqT/eR08Zl9d1QeKB+1fw
+gjZmY/10kFLnTKlWGIaLIu60ehbXxZeFbW+m1pF9uHEiIkWgkrHNjKfzWh5EyfhY
+vXxWuZH92ZP/nioGzVQr00oSEPLwW1RSoAx3jPuu1EILNu7lFL896CsDZpa1Oigf
+OMxk0GhMuKs4H6TlHmx5a0TOAcGYWEbnqXi+KUw7pMPFiEs1/2crFI6QfQx8R7dL
+/ohKFvksPExsB196RZ1PFyMdryOr/mCqI4nBT+KzPz4zJF2iTMGq3NFQI2MvW/4g
+WMwsyQtIJQviFJpYlQpOVBFaeB69oHJMxfauM8OdEU8yomFl3sAVagNxPfiWsGt4
+LRsReK2BDT/pnhhZG96qSsNPwQlrwffBleTy9BGSuHHox6A7GKyVAAOMND/TY1ak
+-----END RSA PRIVATE KEY-----&quot;;
+
     let data = &quot;A quick brown fox jumps over the lazy dog.&quot;;
 
     // Encrypt with public key
     let rsa = Rsa::public_key_from_pem(public_key_pem.as_bytes()).unwrap();
     let mut buf: Vec&lt;u8&gt; = vec![0; rsa.size() as usize];
     let _ = rsa.public_encrypt(data.as_bytes(), &amp;mut buf, Padding::PKCS1).unwrap();
-    println!(&quot;Encrypted: {}&quot;, buf);
+    println!(&quot;Encrypted: {:?}&quot;, buf);
 
     let data = buf;
 
     // Decrypt with private key
     let rsa = Rsa::private_key_from_pem_passphrase(private_key_pem.as_bytes(), passphrase.as_bytes()).unwrap();
     let mut buf: Vec&lt;u8&gt; = vec![0; rsa.size() as usize];
-    let _ = rsa.private_decrypt(data, &amp;mut buf, Padding::PKCS1).unwrap();
+    let _ = rsa.private_decrypt(&amp;data, &amp;mut buf, Padding::PKCS1).unwrap();
     println!(&quot;Decrypted: {}&quot;, String::from_utf8(buf).unwrap());
 }
 </code></pre></pre>
