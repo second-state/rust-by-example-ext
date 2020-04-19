@@ -97,3 +97,27 @@ fn main() {
 }
 ```
 
+## Iterate through the arrays
+
+Using the `genrows()` function, you can deconstruct the `n` dimension array 
+into an 1D array of `n-1` dimension arrays.
+
+```rust,editable
+# extern crate ndarray;
+
+use ndarray::arr3;
+
+fn main() {
+    let a3 = arr3(&[[[1, 2], [3, 4]],
+                    [[5, 6], [7, 8]],
+                    [[9, 0], [1, 2]]]);
+    for row in a3.genrows() {
+        // Each row is a 2D array
+        println!("2D array is {:?}", row);
+        for r in row.genrows() {
+            // Each r is an 1D array
+            println!("1D array is {:?}", r);
+        }
+    }
+}
+```
