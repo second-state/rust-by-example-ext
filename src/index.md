@@ -23,6 +23,10 @@ Now let's begin!
 
 - [N-dimensional array](ndarray.md) - Multi-dimensional arrays are crucial for scientific computing, data mining, machine learning (ML), and artificial intelligence (AI) applications.
 
+- [Lazy initialization](lazy_static.md) - Lazy initialization allows you to assign values to static variables at runtime.
+
+- [Regular expression](regex.md) - Processing and manipulating text and string values.
+
 - [WebAssembly](webassembly.md) - It is very popular to run Rust apps in WebAssembly, learn why and how.
 
 [rust]: https://www.rust-lang.org/

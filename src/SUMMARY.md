@@ -13,6 +13,10 @@
     - [RSA](openssl/rsa.md)
 
 - [N-dimensional array](ndarray.md)
+
+- [Lazy initialization](lazy_static.md)
+
+- [Regular expression](regex.md)
     
 - [WebAssembly](webassembly.md)
     - [Compile targets](webassembly/compile.md)
