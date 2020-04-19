@@ -9,8 +9,8 @@
 
 - [Random numbers](rand.md)
 
-- [Public key cryptography with the OpenSSL](openssl.md)
-    - [RSA public key encyrption](openssl/rsa.md)
+- [SSL/TLS toolkit](openssl.md)
+    - [RSA](openssl/rsa.md)
 
 - [N-dimensional array](ndarray.md)
     
