@@ -12,6 +12,7 @@ The example below shows three static variables that must be initialized
 by code after the program starts.
 
 ```rust,editable
+#[macro_use]
 # extern crate lazy_static;
 
 use std::collections::HashMap;
