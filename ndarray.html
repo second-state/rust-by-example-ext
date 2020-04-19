@@ -228,6 +228,27 @@ fn main() {
     println!(&quot;The 3D array is {:?}&quot;, a3);
 }
 </code></pre></pre>
+<h2><a class="header" href="#iterate-through-the-arrays" id="iterate-through-the-arrays">Iterate through the arrays</a></h2>
+<p>Using the <code>genrows()</code> function, you can deconstruct the <code>n</code> dimension array 
+into an 1D array of <code>n-1</code> dimension arrays.</p>
+<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+</span>
+use ndarray::arr3;
+
+fn main() {
+    let a3 = arr3(&amp;[[[1, 2], [3, 4]],
+                    [[5, 6], [7, 8]],
+                    [[9, 0], [1, 2]]]);
+    for row in a3.genrows() {
+        // Each row is a 2D array
+        println!(&quot;2D array is {:?}&quot;, row);
+        for r in row.genrows() {
+            // Each r is an 1D array
+            println!(&quot;1D array is {:?}&quot;, r);
+        }
+    }
+}
+</code></pre></pre>
 
                     </main>
 
