@@ -99,8 +99,12 @@ fn main() {
 
 ## Iterate through the arrays
 
-Using the `genrows()` function, you can deconstruct the `n` dimension array 
-into an 1D array of `n-1` dimension arrays.
+Using the `genrows()` function, you can flatten the `n` dimension array into an 
+array of rows. Each row contains a simple (one dimension) array of values
+along the original array's shortest axis.
+
+Using the `outer_iter()` function, you can deconstruct the `n` dimension array 
+into a simple (one dimension) array of `n-1` dimension arrays.
 
 ```rust,editable
 # extern crate ndarray;
@@ -112,12 +116,11 @@ fn main() {
                     [[5, 6], [7, 8]],
                     [[9, 0], [1, 2]]]);
     for row in a3.genrows() {
-        // Each row is a 2D array
-        println!("2D array is {:?}", row);
-        for r in row.genrows() {
-            // Each r is an 1D array
-            println!("1D array is {:?}", r);
-        }
+        // Each row is a 1D array
+        println!("row is {:?}", row);
+    }
+    for a2 in a3.outer_iter() {
+        println!("2D array is {:?}", a2);
     }
 }
 ```
