@@ -23,6 +23,10 @@ $ mdbook serve
 
 [install Rust]: https://www.rust-lang.org/tools/install
 
+## Interactive code example
+
+![Run an example from the web page](src/rbeext.gif)
+
 ## License
 
 Rust by Example is licensed under either of
