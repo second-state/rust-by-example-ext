@@ -11,7 +11,9 @@ third party libraries and crates. It is designed to complement the official
 core language and standard libraries.
 Additionally for the curious, you can also [check out the source code for this site][home].
 
-> **Note:** Many examples in this book are directly runnable from the web page. Just click on the triangle button at the top right of an example and the results are displayed under it. However, the [Rust playground](https://play.rust-lang.org/) does not support all third party crates. It supports [the top 100](https://github.com/integer32llc/rust-playground/blob/master/compiler/base/Cargo.toml). For crates or features that are not supported by the playground, the code exmple would NOT be runnable on the page. In that case, we show the results next to the examples, and link to [cargo project source code](https://github.com/second-state/rust-by-example-ext/tree/master/examples/) for the example.
+> **Note:** Many examples in this book are directly runnable from the web page. See the animation below this note. However, the [Rust playground](https://play.rust-lang.org/) only supports [100](https://github.com/integer32llc/rust-playground/blob/master/compiler/base/Cargo.toml) 3rd party crates. For crates or features that are not supported by the playground, we show the results next to the examples, and link to [cargo project source code](https://github.com/second-state/rust-by-example-ext/tree/master/examples/).
+
+![Run an example from the web page](rbeext.gif)
 
 Now let's begin!
 
