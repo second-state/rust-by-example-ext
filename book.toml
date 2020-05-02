@@ -1,7 +1,12 @@
 [book]
 title = "Rust By Example -- Extended Edition"
 description = "Covers popular third party Rust crates and libraries by example"
-author = "Second State"
+author = ["Second State", "Michael Yuan"]
+
+[output.html]
+google-analytics = "UA-137134458-10"
+git-repository-url = "https://github.com/second-state/rust-by-example-ext"
+git-repository-icon = "fa-github"
 
 [output.html.playpen]
 editable = true
@@ -9,3 +14,15 @@ editor = "ace"
 
 [output.html.fold]
 enable = true
+
+[output.html.search]
+enable = true
+limit-results = 30
+teaser-word-count = 30
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+heading-split-level = 3
+copy-js = true
