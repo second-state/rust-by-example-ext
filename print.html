@@ -901,14 +901,14 @@ Hello Michael
 <p>To see the complete source code and run it in a Node.js server, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/hello">checkout here</a>.</p>
 </blockquote>
 <h2><a class="header" href="#beyond-simple-arguments" id="beyond-simple-arguments">Beyond simple arguments</a></h2>
-<p>Using the <code>serde</code> tool, we can pass and return arbitary Javascript values to Rust via the SSVM WebAssembly runtime. First, add <code>serde</code> to your dependencies.</p>
+<p>Using the <code>serde</code> crate, we can pass in and return arbitary Javascript values to/from Rust functions. The idea is to serialize the entire set of call arguments, and return values, into JSON strings. First, add <code>serde</code> to your dependencies.</p>
 <pre><code>[dependencies]
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
 serde_json = &quot;1.0&quot;
 wasm-bindgen = &quot;=0.2.61&quot;
 </code></pre>
 <p>The Rust function takes two floating point numbers, and returns the product of
-the two. Notice that it parses the input and return values in JSON.</p>
+the two. Notice that the input and return values are all encoded in JSON.</p>
 <pre><code>use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -934,7 +934,7 @@ console.log( area(JSON.stringify(x)) );
 <p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/json_io">checkout here</a>.</p>
 </blockquote>
 <h2><a class="header" href="#structs-and-objects" id="structs-and-objects">Structs and objects</a></h2>
-<p>Using the <code>serde</code> tool, we can pass and return Javascript objects and arrays to Rust functions. Javascript objects are mapped to Rust structs.</p>
+<p>Using the <code>serde</code> crate, we can pass in complex Javascript objects and arrays to Rust functions, and return Javascript objects. Javascript objects are mapped to Rust structs, and arrays are mapped to Rust tuples.</p>
 <p>The Rust function <code>draw()</code> takes two JSON strings, each representing a <code>Point</code> struct, and returns a JSON string representing a <code>Line</code> struct.</p>
 <pre><code>use wasm_bindgen::prelude::*;
 use serde::{Serialize, Deserialize};
