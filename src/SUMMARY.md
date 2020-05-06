@@ -20,7 +20,8 @@
     
 - [WebAssembly](webassembly.md)
     - [Compile targets](webassembly/compile.md)
-    - [Run](webassembly/run.md)
-    - [Web browser host](webassembly/browser.md)
-    - [Node.js host](webassembly/nodejs.md)
+    - [Run a simple program](webassembly/run.md)
+    - [Rust Javascript binding](webassembly/browser.md)
+    - [WebAssembly on the server side](webassembly/nodejs.md)
+    - [Call Javascript from Rust](webassembly/nodejshelper.md)
     
