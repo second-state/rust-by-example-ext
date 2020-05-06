@@ -15,7 +15,9 @@ $ rustup override set nightly
 $ rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
-Now, create a Rust library project in cargo, and create a public function like the following. Check out the [complete example source code here](https://github.com/second-state/wasm-learning/tree/master/browser/triple).
+> Check out the [complete example source code here](https://github.com/second-state/wasm-learning/tree/master/browser/triple).
+
+Now, create a Rust library project in cargo, and create a public function like the following.
 
 ```
 #[no_mangle]

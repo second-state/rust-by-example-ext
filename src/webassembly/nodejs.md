@@ -57,7 +57,7 @@ $ node app.js
 Hello Michael
 ```
 
-To see the complete source code and run it in a Node.js server, [checkout here](https://github.com/second-state/wasm-learning/tree/master/nodejs/hello).
+> To see the complete source code and run it in a Node.js server, [checkout here](https://github.com/second-state/wasm-learning/tree/master/nodejs/hello).
 
 ## Beyond simple arguments
 
@@ -104,6 +104,8 @@ Run the Node.js app shows the following result.
 $ node app.js
 50.0
 ```
+
+> To see the complete source code and run it in Node.js, [checkout here](https://github.com/second-state/wasm-learning/tree/master/nodejs/json_io).
 
 ## Structs and objects
 
@@ -161,6 +163,8 @@ $ node app.js
 {"points":[{"x":1.5,"y":3.8},{"x":2.5,"y":5.8}],"valid":true,"length":2.2360682,"desc":"A thin red line"}
 ```
 
+> To see the complete source code and run it in Node.js, [checkout here](https://github.com/second-state/wasm-learning/tree/master/nodejs/json_io).
+
 ## Binary data
 
 A server side function often needs to process binary data directly. The SSVM
@@ -209,3 +213,4 @@ $ node app.js
 000010  2b da 1a 8d 38 c7 19 2d 3c 0a 14 a3 36 d3 c3 cb  +Ú..8Ç.-<..£6ÓÃË
 ```
 
+> To see the complete source code and run it in Node.js, [checkout here](https://github.com/second-state/wasm-learning/tree/master/nodejs/functions).
