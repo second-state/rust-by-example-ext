@@ -61,7 +61,7 @@ Hello Michael
 
 ## Beyond simple arguments
 
-Using the `serde` tool, we can pass and return arbitary Javascript values to Rust via the SSVM WebAssembly runtime. First, add `serde` to your dependencies.
+Using the `serde` crate, we can pass in and return arbitary Javascript values to/from Rust functions. The idea is to serialize the entire set of call arguments, and return values, into JSON strings. First, add `serde` to your dependencies.
 
 ```
 [dependencies]
@@ -71,7 +71,7 @@ wasm-bindgen = "=0.2.61"
 ```
 
 The Rust function takes two floating point numbers, and returns the product of
-the two. Notice that it parses the input and return values in JSON.
+the two. Notice that the input and return values are all encoded in JSON.
 
 ```
 use wasm_bindgen::prelude::*;
@@ -109,7 +109,7 @@ $ node app.js
 
 ## Structs and objects
 
-Using the `serde` tool, we can pass and return Javascript objects and arrays to Rust functions. Javascript objects are mapped to Rust structs.
+Using the `serde` crate, we can pass in complex Javascript objects and arrays to Rust functions, and return Javascript objects. Javascript objects are mapped to Rust structs, and arrays are mapped to Rust tuples.
 
 The Rust function `draw()` takes two JSON strings, each representing a `Point` struct, and returns a JSON string representing a `Line` struct.
 
