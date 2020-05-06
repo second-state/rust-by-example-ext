@@ -152,7 +152,30 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#compile-targets-for-webassembly" id="compile-targets-for-webassembly">Compile targets for WebAssembly</a></h1>
-<p>Coming soon!</p>
+<p>There are several Rust compiler targets for WebAssembly. They differ
+because different WebAssembly VMs supports different extensions. 
+For example, some WebAssembly VMs have access the WASI extension that allows
+access to system resources such as the file system.
+The <code>wasm32</code> target is the most general target that produces plain WebAssembly
+bytecode that can run on any WebAssembly VM.</p>
+<p>To add the <code>wasm32</code> target to the compiler toolchain, do the following on your operating system's command line.</p>
+<pre><code>$ rustup target add wasm32-unknown-unknown
+$ rustup override set nightly
+$ rustup target add wasm32-unknown-unknown --toolchain nightly
+</code></pre>
+<blockquote>
+<p>Check out the <a href="https://github.com/second-state/wasm-learning/tree/master/browser/triple">complete example source code here</a>.</p>
+</blockquote>
+<p>Now, create a Rust library project in cargo, and create a public function like the following.</p>
+<pre><code>#[no_mangle]
+pub extern fn triple(x: i32) -&gt; i32 {
+  return 3 * x;
+}
+</code></pre>
+<p>You can build the project into WebAssembly bytecode using <code>cargo</code>.</p>
+<pre><code>$ cargo +nightly build --target wasm32-unknown-unknown --release
+</code></pre>
+<p>The compiled WebAssembly bytecode application is a single file with the <code>wasm</code> extension. For example, here is the <code>wasm</code> file from our example <code>target/wasm32-unknown-unknown/release/my_project_name.wasm</code>.</p>
 
                     </main>
 

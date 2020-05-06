@@ -151,8 +151,43 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#run-webassembly-programs-in-a-browser-host" id="run-webassembly-programs-in-a-browser-host">Run WebAssembly programs in a browser host</a></h1>
-<p>Coming soon!</p>
+                        <h1><a class="header" href="#rust-javascript-binding-through-webassembly" id="rust-javascript-binding-through-webassembly">Rust Javascript binding through WebAssembly</a></h1>
+<p>In the previous articles, we showed how to compile a Rust function into
+WebAssembly, and then call this function from Javascript in a web browser.
+However, that approach has some severe limitations. Specifically, WebAssembly
+has very limited support for data types. When a WebAssembly function is 
+exported to Javascript, the input parameters and return values are limited
+32 bit integers. You cannot even pass or return string values to the WebAssembly
+function! You could even do a Hello World!</p>
+<p>Fortunately, the <code>wasm-bindgen</code> project provides binding between Rust and
+Javascript. An easy way to <code>wasm-bindgen</code> in a browser project is to the 
+<code>wasm-pack</code> tool. Here is how to install <code>wasm-pack</code> through the npm package manager.</p>
+<pre><code>$ npm install -g wasm-pack
+</code></pre>
+<p>In your project's <code>Cargo.toml</code>, add dependency for the <code>wasm-bindgen</code> crate.</p>
+<pre><code>[dependencies]
+wasm-bindgen = &quot;0.2.50&quot;
+</code></pre>
+<p>Below is a Rust library function we wrote. As you can see it now takes and returns <code>String</code> values. The function must be annotated with <code>#[wasm_bindgen]</code> in order for the Rust compiler toolchain to call <code>wasm-bindgen</code> to generate the necessary shim code that binds Rust and Javascript through WebAssembly.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn say(s: String) -&gt; String {
+  let r = String::from(&quot;hello &quot;);
+  return r + &amp;s;
+}
+</code></pre>
+<p>Build the <code>wasm</code> bytecode application and its Javascript helper files via <code>wasm-pack</code>.
+The generated files are in the <code>pkg</code> directory.</p>
+<pre><code>$ wasm-pack build --target web
+</code></pre>
+<p>From a web browser's Javascript console, you can load the generated Javascript file, export the Rust function, and call it.</p>
+<pre><code>import init, { say } from 'pkg/hello_lib.js';
+init();
+say(&quot;Michael&quot;);
+</code></pre>
+<p>The result is <code>Hello Michael</code>.</p>
+<p>To see the complete source code and run it on a web page, <a href="https://github.com/second-state/wasm-learning/tree/master/browser/hello">checkout here</a>.</p>
 
                     </main>
 

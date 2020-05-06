@@ -768,15 +768,251 @@ fn main() {
 <h1><a class="header" href="#regular-expression" id="regular-expression">Regular expression</a></h1>
 <p>Coming soon!</p>
 <h1><a class="header" href="#webassembly-1" id="webassembly-1">WebAssembly</a></h1>
-<p>Coming soon!</p>
+<p>Besides operating system specific native binaries, Rust programs can also be compiled into managed 
+code that runs inside containers or virtual machines. The reason to use managed code is runtime safety. That allows un-trusted
+Rust programs to run in environments such as web browsers and servers. Compared with native binaries, managed
+containers are also much easier to provision, limit access to resources, start, and stop on demand.</p>
+<p>A popular managed code compiler target is the WebAssembly virtual machine. With WebAssembly, your Rust programs can run side-by-side with Javascript in
+web browsers and servers. In this chapter, we will show you how.</p>
 <h1><a class="header" href="#compile-targets-for-webassembly" id="compile-targets-for-webassembly">Compile targets for WebAssembly</a></h1>
-<p>Coming soon!</p>
-<h1><a class="header" href="#run-webassembly-programs" id="run-webassembly-programs">Run WebAssembly programs</a></h1>
-<p>Coming soon!</p>
-<h1><a class="header" href="#run-webassembly-programs-in-a-browser-host" id="run-webassembly-programs-in-a-browser-host">Run WebAssembly programs in a browser host</a></h1>
-<p>Coming soon!</p>
-<h1><a class="header" href="#run-webassembly-programs-in-a-nodejs-host" id="run-webassembly-programs-in-a-nodejs-host">Run WebAssembly programs in a Node.js host</a></h1>
-<p>Coming soon!</p>
+<p>There are several Rust compiler targets for WebAssembly. They differ
+because different WebAssembly VMs supports different extensions. 
+For example, some WebAssembly VMs have access the WASI extension that allows
+access to system resources such as the file system.
+The <code>wasm32</code> target is the most general target that produces plain WebAssembly
+bytecode that can run on any WebAssembly VM.</p>
+<p>To add the <code>wasm32</code> target to the compiler toolchain, do the following on your operating system's command line.</p>
+<pre><code>$ rustup target add wasm32-unknown-unknown
+$ rustup override set nightly
+$ rustup target add wasm32-unknown-unknown --toolchain nightly
+</code></pre>
+<blockquote>
+<p>Check out the <a href="https://github.com/second-state/wasm-learning/tree/master/browser/triple">complete example source code here</a>.</p>
+</blockquote>
+<p>Now, create a Rust library project in cargo, and create a public function like the following.</p>
+<pre><code>#[no_mangle]
+pub extern fn triple(x: i32) -&gt; i32 {
+  return 3 * x;
+}
+</code></pre>
+<p>You can build the project into WebAssembly bytecode using <code>cargo</code>.</p>
+<pre><code>$ cargo +nightly build --target wasm32-unknown-unknown --release
+</code></pre>
+<p>The compiled WebAssembly bytecode application is a single file with the <code>wasm</code> extension. For example, here is the <code>wasm</code> file from our example <code>target/wasm32-unknown-unknown/release/my_project_name.wasm</code>.</p>
+<h1><a class="header" href="#run-a-simple-webassembly-program" id="run-a-simple-webassembly-program">Run a simple WebAssembly program</a></h1>
+<p>In the previous article, we showed you how to compile a Rust program
+into a WebAssembly bytecode file.
+The easiest way to run a WebAssembly bytecode file is to simply load
+it into a web browser. Most modern web browsers already support
+WebAssembly.</p>
+<p>The code example below shows how to create a WebAssembly VM, load the 
+bytecode application, export the Rust function in the bytecode into Javascript,
+and then call this Rust / WebAssembly function from Javascript.
+All those steps could be done in the browser's Javascript console.</p>
+<pre><code>const response = await fetch('my_project_name.wasm');
+const buffer = await response.arrayBuffer();
+const module = await WebAssembly.compile(buffer);
+const instance = await WebAssembly.instantiate(module);
+const exports = instance.exports;
+const triple = exports.triple;
+</code></pre>
+<p>In the browser Javascript console, you can now call the Rust <code>triple()</code> function
+in WebAssembly and triple your input number. The code below returns number <code>30</code>.</p>
+<pre><code>triple(10);
+</code></pre>
+<p>Of course, you can just easily load Rust compiled WebAssembly functions from
+your web page. Check out <a href="https://github.com/second-state/wasm-learning/tree/master/browser/triple">a full example here</a>.</p>
+<h1><a class="header" href="#rust-javascript-binding-through-webassembly" id="rust-javascript-binding-through-webassembly">Rust Javascript binding through WebAssembly</a></h1>
+<p>In the previous articles, we showed how to compile a Rust function into
+WebAssembly, and then call this function from Javascript in a web browser.
+However, that approach has some severe limitations. Specifically, WebAssembly
+has very limited support for data types. When a WebAssembly function is 
+exported to Javascript, the input parameters and return values are limited
+32 bit integers. You cannot even pass or return string values to the WebAssembly
+function! You could even do a Hello World!</p>
+<p>Fortunately, the <code>wasm-bindgen</code> project provides binding between Rust and
+Javascript. An easy way to <code>wasm-bindgen</code> in a browser project is to the 
+<code>wasm-pack</code> tool. Here is how to install <code>wasm-pack</code> through the npm package manager.</p>
+<pre><code>$ npm install -g wasm-pack
+</code></pre>
+<p>In your project's <code>Cargo.toml</code>, add dependency for the <code>wasm-bindgen</code> crate.</p>
+<pre><code>[dependencies]
+wasm-bindgen = &quot;0.2.50&quot;
+</code></pre>
+<p>Below is a Rust library function we wrote. As you can see it now takes and returns <code>String</code> values. The function must be annotated with <code>#[wasm_bindgen]</code> in order for the Rust compiler toolchain to call <code>wasm-bindgen</code> to generate the necessary shim code that binds Rust and Javascript through WebAssembly.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn say(s: String) -&gt; String {
+  let r = String::from(&quot;hello &quot;);
+  return r + &amp;s;
+}
+</code></pre>
+<p>Build the <code>wasm</code> bytecode application and its Javascript helper files via <code>wasm-pack</code>.
+The generated files are in the <code>pkg</code> directory.</p>
+<pre><code>$ wasm-pack build --target web
+</code></pre>
+<p>From a web browser's Javascript console, you can load the generated Javascript file, export the Rust function, and call it.</p>
+<pre><code>import init, { say } from 'pkg/hello_lib.js';
+init();
+say(&quot;Michael&quot;);
+</code></pre>
+<p>The result is <code>Hello Michael</code>.</p>
+<p>To see the complete source code and run it on a web page, <a href="https://github.com/second-state/wasm-learning/tree/master/browser/hello">checkout here</a>.</p>
+<h1><a class="header" href="#rust-and-webassembly-on-the-server-side" id="rust-and-webassembly-on-the-server-side">Rust and WebAssembly on the server side</a></h1>
+<p>In the previous article, we discussed how to run Rust functions in web browsers.
+In this article, we will show you how to do this on the server side.
+We believe that Rust and WebAssembly <a href="https://cloud.secondstate.io/server-side-webassembly/why">brings a lot of benefits</a> to server side
+applications.</p>
+<p>On the server side, we use the open source <a href="https://github.com/second-state/SSVM">Second State VM (SSVM)</a> to execute
+Rust and WebAssembly functions in the Node.js environment. We still use
+the <code>wasm-bindgen</code> crate to support binding between Rust and
+Javascript. An easy way to <code>wasm-bindgen</code> in a SSVM Node.js project is to the 
+<code>ssvmup</code> tool. Here is how to install <code>ssvmup</code> through the npm package manager.</p>
+<pre><code>$ npm install -g ssvmup
+</code></pre>
+<p>In your project's <code>Cargo.toml</code>, add dependency for the <code>wasm-bindgen</code> crate.</p>
+<pre><code>[dependencies]
+wasm-bindgen = &quot;=0.2.61&quot;
+</code></pre>
+<h2><a class="header" href="#hello-world" id="hello-world">Hello world</a></h2>
+<p>Below is a Rust hello world function we wrote. The function must be annotated with <code>#[wasm_bindgen]</code> in order for the Rust compiler toolchain to call <code>wasm-bindgen</code> to generate the necessary shim code that binds Rust and Javascript through WebAssembly.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn say(s: String) -&gt; String {
+  let r = String::from(&quot;hello &quot;);
+  return r + &amp;s;
+}
+</code></pre>
+<p>Build the <code>wasm</code> bytecode application and its Javascript helper files via <code>ssvmup</code>.
+The generated files are in the <code>pkg</code> directory.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>In a Javascript application, you can load the generated Javascript file, export the Rust function, and call it.</p>
+<pre><code>const { say } = require('pkg/hello_lib.js');
+say(&quot;Michael&quot;);
+</code></pre>
+<p>You can now run the Javascript application from Node.js command line.</p>
+<pre><code>$ node app.js
+Hello Michael
+</code></pre>
+<blockquote>
+<p>To see the complete source code and run it in a Node.js server, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/hello">checkout here</a>.</p>
+</blockquote>
+<h2><a class="header" href="#beyond-simple-arguments" id="beyond-simple-arguments">Beyond simple arguments</a></h2>
+<p>Using the <code>serde</code> tool, we can pass and return arbitary Javascript values to Rust via the SSVM WebAssembly runtime. First, add <code>serde</code> to your dependencies.</p>
+<pre><code>[dependencies]
+serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
+serde_json = &quot;1.0&quot;
+wasm-bindgen = &quot;=0.2.61&quot;
+</code></pre>
+<p>The Rust function takes two floating point numbers, and returns the product of
+the two. Notice that it parses the input and return values in JSON.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn area(sides: &amp;str) -&gt; String {
+  let s: (f32, f32) = serde_json::from_str(&amp;sides).unwrap();
+  let a = s.0 * s.1;
+  return serde_json::to_string(&amp;a).unwrap();
+}
+</code></pre>
+<p>Build and create the <code>pkg</code> folder for the compiled <code>wasm</code> bytecode file and the Javascript shim file <code>my_project_name.js</code>.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>The Javascript calling program in Node.js looks like the following.</p>
+<pre><code>const { area } = require('pkg/my_project_name.js');
+var x = [10., 5.];
+console.log( area(JSON.stringify(x)) );
+</code></pre>
+<p>Run the Node.js app shows the following result.</p>
+<pre><code>$ node app.js
+50.0
+</code></pre>
+<blockquote>
+<p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/json_io">checkout here</a>.</p>
+</blockquote>
+<h2><a class="header" href="#structs-and-objects" id="structs-and-objects">Structs and objects</a></h2>
+<p>Using the <code>serde</code> tool, we can pass and return Javascript objects and arrays to Rust functions. Javascript objects are mapped to Rust structs.</p>
+<p>The Rust function <code>draw()</code> takes two JSON strings, each representing a <code>Point</code> struct, and returns a JSON string representing a <code>Line</code> struct.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Point {
+  x: f32,
+  y: f32
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Line {
+  points: Vec&lt;Point&gt;,
+  valid: bool,
+  length: f32,
+  desc: String
+}
+
+#[wasm_bindgen]
+pub fn draw(points: &amp;str) -&gt; String {
+  let ps: (Point, Point, String) = serde_json::from_str(&amp;points).unwrap();
+  let length = ((ps.0.x - ps.1.x) * (ps.0.x - ps.1.x) + (ps.0.y - ps.1.y) * (ps.0.y - ps.1.y)).sqrt();
+
+  let valid = if length == 0.0 { false } else { true };
+  let line = Line { points: vec![ps.0, ps.1], valid: valid, length: length, desc: ps.2 };
+  return serde_json::to_string(&amp;line).unwrap();
+}
+</code></pre>
+<p>Build and create the <code>pkg</code> folder for the compiled <code>wasm</code> bytecode file and the Javascript shim file <code>my_project_name.js</code>.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>The Javascript calling program in Node.js looks like the following.</p>
+<pre><code>const { draw } = require('pkg/my_project_name.js');
+var x = [{x:1.5, y:3.8}, {x:2.5, y:5.8}, &quot;A thin red line&quot;];
+console.log( draw(JSON.stringify(x)) );
+</code></pre>
+<p>Run the Node.js app shows the following result.</p>
+<pre><code>$ node app.js
+{&quot;points&quot;:[{&quot;x&quot;:1.5,&quot;y&quot;:3.8},{&quot;x&quot;:2.5,&quot;y&quot;:5.8}],&quot;valid&quot;:true,&quot;length&quot;:2.2360682,&quot;desc&quot;:&quot;A thin red line&quot;}
+</code></pre>
+<blockquote>
+<p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/json_io">checkout here</a>.</p>
+</blockquote>
+<h2><a class="header" href="#binary-data" id="binary-data">Binary data</a></h2>
+<p>A server side function often needs to process binary data directly. The SSVM
+toolchain supports that use case out of the box.
+In this example, we will show you how to create a Rust function on the server
+to compute a SHA3 cryptographic digest for an arbitary input binary data array. First, add 
+the <code>sh3</code> crate as a dependency.</p>
+<pre><code>[dependencies]
+sha3 = &quot;0.8.2&quot;
+wasm-bindgen = &quot;=0.2.61&quot;
+</code></pre>
+<p>Below is the Rust function that computes the SHA3 digest value. Notice that both
+its input and return values are byte arrays.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+use sha3::{Digest, Sha3_256};
+
+#[wasm_bindgen]
+pub fn sha3_digest(v: &amp;[u8]) -&gt; Vec&lt;u8&gt; {
+  return Sha3_256::digest(&amp;v).as_slice().to_vec();
+}
+</code></pre>
+<p>Build and create the <code>pkg</code> folder for the compiled <code>wasm</code> bytecode file and the Javascript shim file <code>my_project_name.js</code>.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>The Javascript calling program in Node.js looks like the following.</p>
+<pre><code>const { sha3_digest } = require('pkg/my_project_name.js');
+console.log( sha3_digest(encoder.encode(&quot;This is an important message&quot;)) );
+</code></pre>
+<p>Run the Node.js app shows the following result.</p>
+<pre><code>$ node app.js
+000000  57 1b e7 d1 bd 69 fb 31 9f 0a d3 fa 0f 9f 9a b5  W.çÑ½iû1..Óú...µ
+000010  2b da 1a 8d 38 c7 19 2d 3c 0a 14 a3 36 d3 c3 cb  +Ú..8Ç.-&lt;..£6ÓÃË
+</code></pre>
+<blockquote>
+<p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/functions">checkout here</a>.</p>
+</blockquote>
 
                     </main>
 
