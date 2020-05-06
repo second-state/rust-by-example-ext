@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a></li><li class="chapter-item "><a href="openssl.html"><strong aria-hidden="true">3.</strong> SSL/TLS toolkit</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="openssl/rsa.html"><strong aria-hidden="true">3.1.</strong> RSA</a></li></ol></li><li class="chapter-item "><a href="ndarray.html"><strong aria-hidden="true">4.</strong> N-dimensional array</a></li><li class="chapter-item "><a href="lazy_static.html"><strong aria-hidden="true">5.</strong> Lazy initialization</a></li><li class="chapter-item "><a href="regex.html"><strong aria-hidden="true">6.</strong> Regular expression</a></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">7.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">7.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">7.2.</strong> Run</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">7.3.</strong> Web browser host</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">7.4.</strong> Node.js host</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="index.html">Introduction</a></li><li class="chapter-item "><a href="serde.html"><strong aria-hidden="true">1.</strong> Serialization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="serde/json.html"><strong aria-hidden="true">1.1.</strong> JSON</a></li><li class="chapter-item "><a href="serde/bincode.html"><strong aria-hidden="true">1.2.</strong> Binary</a></li><li class="chapter-item "><a href="serde/feature.html"><strong aria-hidden="true">1.3.</strong> Third party crates</a></li></ol></li><li class="chapter-item "><a href="rand.html"><strong aria-hidden="true">2.</strong> Random numbers</a></li><li class="chapter-item "><a href="openssl.html"><strong aria-hidden="true">3.</strong> SSL/TLS toolkit</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="openssl/rsa.html"><strong aria-hidden="true">3.1.</strong> RSA</a></li></ol></li><li class="chapter-item "><a href="ndarray.html"><strong aria-hidden="true">4.</strong> N-dimensional array</a></li><li class="chapter-item "><a href="lazy_static.html"><strong aria-hidden="true">5.</strong> Lazy initialization</a></li><li class="chapter-item "><a href="regex.html"><strong aria-hidden="true">6.</strong> Regular expression</a></li><li class="chapter-item "><a href="webassembly.html"><strong aria-hidden="true">7.</strong> WebAssembly</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="webassembly/compile.html"><strong aria-hidden="true">7.1.</strong> Compile targets</a></li><li class="chapter-item "><a href="webassembly/run.html"><strong aria-hidden="true">7.2.</strong> Run a simple program</a></li><li class="chapter-item "><a href="webassembly/browser.html"><strong aria-hidden="true">7.3.</strong> Rust Javascript binding</a></li><li class="chapter-item "><a href="webassembly/nodejs.html"><strong aria-hidden="true">7.4.</strong> WebAssembly on the server side</a></li><li class="chapter-item "><a href="webassembly/nodejshelper.html"><strong aria-hidden="true">7.5.</strong> Call Javascript from Rust</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1013,6 +1013,233 @@ console.log( sha3_digest(encoder.encode(&quot;This is an important message&quot;
 <blockquote>
 <p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/functions">checkout here</a>.</p>
 </blockquote>
+<h1><a class="header" href="#call-javascript-from-rust" id="call-javascript-from-rust">Call Javascript from Rust</a></h1>
+<p>In the previous article, we discussed how to call Rust functions from
+Javascript. How about the other way around? The <code>nodejs-helper</code> crate
+enables Rust functions to call Javascript functions in Node.js.</p>
+<blockquote>
+<p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/nodejs_example">checkout here</a>.</p>
+</blockquote>
+<p>In your project's <code>Cargo.toml</code>, add dependency for the <a href="https://github.com/second-state/nodejs-helper"><code>nodejs-helper</code></a> and <code>wasm-bindgen</code> crates.</p>
+<pre><code>[dependencies]
+wasm-bindgen = &quot;=0.2.61&quot;
+nodejs-helper = &quot;0.0.3&quot;
+</code></pre>
+<h2><a class="header" href="#console-and-time" id="console-and-time">Console and time</a></h2>
+<p>Recall that WebAssembly is a very simple and standalone virtual machine. It
+has no access the operating system's standard input / output, as well as 
+features such as the system clock. In our Rust function, we can
+rely on the Javascript functions in Node.js to access those festures.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn show_now() {
+  nodejs_helper::console::log(&quot;Timestamp now: &quot;);
+  nodejs_helper::console::log(&amp;nodejs_helper::date::timestamp());
+}
+
+#[wasm_bindgen]
+pub fn utc_now() {
+  nodejs_helper::console::log(&quot;UTC time: &quot;);
+  nodejs_helper::console::log(&amp;nodejs_helper::date::utc_string());
+}
+
+#[wasm_bindgen]
+pub fn my_time(tz: &amp;str) {
+  nodejs_helper::console::log(tz);
+  nodejs_helper::console::log(&amp;nodejs_helper::date::format_date(&quot;en-US&quot;, &quot;long&quot;, &quot;numeric&quot;, &quot;long&quot;, &quot;numeric&quot;, tz, &quot;short&quot;));
+}
+</code></pre>
+<p>Build the <code>wasm</code> bytecode application and its Javascript helper files via <code>ssvmup</code>.
+The generated files are in the <code>pkg</code> directory.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>In a Javascript application, you can load the generated Javascript file, export the Rust function, and call it.</p>
+<pre><code>const { show_now, utc_now, my_time } = require('pkg/nodejs_example.js');
+
+show_now();
+utc_now();
+my_time(&quot;America/Chicago&quot;);
+</code></pre>
+<p>You can now run the Javascript application from Node.js command line.</p>
+<pre><code>$ node date.js
+Timestamp now:
+1588013800826
+UTC time:
+Mon, 27 Apr 2020 18:56:40 GMT
+America/Chicago
+Monday, April 27, 2020, CDT
+</code></pre>
+<h2><a class="header" href="#file-system-access" id="file-system-access">File system access</a></h2>
+<p>The Rust functions in this section read an image file from the local file system, resize it, and write back to the file system. It also uses the Javascript console tool to measure the time spent on each task.</p>
+<pre><code>[dependencies]
+serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
+serde_json = &quot;1.0&quot;
+wasm-bindgen = &quot;=0.2.61&quot;
+image = &quot;0.23.0&quot;
+</code></pre>
+<p>The Rust function takes
+a JSON string input that contains the image file names and resized dimensions.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+
+#[derive(Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug)]
+pub struct Dimension {
+  pub width: u32,
+  pub height: u32,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Picture {
+  pub dim: Dimension,
+  pub raw: Vec&lt;u8&gt;,
+}
+
+#[wasm_bindgen]
+pub fn resize_file(input: &amp;str) {
+  // Use JSON to pass multiple call arguments
+  let p: (Dimension, String, String) = serde_json::from_str(input).unwrap();
+
+  nodejs_helper::console::time(&quot;Resize file&quot;);
+  let raw = nodejs_helper::fs::read_file_sync(&amp;p.1);
+  nodejs_helper::console::time_log(&quot;Resize file&quot;, &quot;Done reading&quot;);
+  let src = Picture {
+    dim: p.0,
+    raw: raw,
+  };
+  let target = resize_impl(&amp;src);
+  nodejs_helper::console::time_log(&quot;Resize file&quot;, &quot;Done resizing&quot;);
+
+  nodejs_helper::fs::write_file_sync(&amp;p.2, &amp;target.raw);
+  nodejs_helper::console::time_log(&quot;Resize file&quot;, &quot;Done writing&quot;);
+  nodejs_helper::console::time_end(&quot;Resize file&quot;);
+}
+
+pub fn resize_impl(src: &amp;Picture) -&gt; Picture {
+  // ... use the img crate to resize ...
+}
+</code></pre>
+<p>Build and create the <code>pkg</code> folder for the compiled <code>wasm</code> bytecode file and the Javascript shim file <code>my_project_name.js</code>.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>The Javascript calling program in Node.js looks like the following.</p>
+<pre><code>const { resize_file } = require('../pkg/nodejs_example.js');
+
+const dim = {
+    width: 100,
+    height: 100
+};
+
+resize_file(JSON.stringify([dim, 'cat.png', `test.png`]));
+</code></pre>
+<p>Run the Node.js app shows the following result.</p>
+<pre><code>$ node image.js
+Resize file: 5.603ms Done reading
+Resize file: 1506.694ms Done resizing
+Resize file: 1507.634ms Done writing
+Resize file: 1507.977ms
+</code></pre>
+<h2><a class="header" href="#sqlite-database-access" id="sqlite-database-access">Sqlite database access</a></h2>
+<p>First, you must have the <code>better-sqlite3</code> module installed in
+your Node.js setup. The Rust function will access a sqlite database through this module.</p>
+<pre><code>$ npm i better-sqlite3
+</code></pre>
+<p>The Rust functions to create, update, and query a Sqlite database on the local
+file system are as follows.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize)]
+pub struct User {
+  pub id: u32,
+  pub full_name: String,
+  pub created: String,
+}
+
+#[wasm_bindgen]
+pub fn create_sqlite(path: &amp;str) {
+  let sql_create = &quot;
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY NOT NULL,
+  full_name TEXT NOT NULL,
+  created DATE NOT NULL
+);&quot;;
+  let sql_insert = &quot;
+INSERT INTO users
+VALUES
+(1, 'Bob McFett', '32-01-01'),
+(2, 'Angus Vader', '02-03-04'),
+(3, 'Imperator Colin', '01-01-01');&quot;;
+
+  nodejs_helper::sqlite3::create(path);
+  nodejs_helper::sqlite3::update(path, sql_create);
+  nodejs_helper::sqlite3::update(path, sql_insert);
+}
+
+#[wasm_bindgen]
+pub fn query_sqlite(path: &amp;str) {
+  let sql_query = &quot;SELECT * FROM users;&quot;;
+  let rows: String = nodejs_helper::sqlite3::query(path, sql_query);
+  let users: Vec&lt;User&gt; = serde_json::from_str(&amp;rows).unwrap();
+  for user in users.into_iter() {
+    nodejs_helper::console::log(&amp;(user.id.to_string() + &quot; : &quot; + &amp;user.full_name));
+  }
+}
+</code></pre>
+<p>Build and create the <code>pkg</code> folder for the compiled <code>wasm</code> bytecode file and the Javascript shim file <code>my_project_name.js</code>.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>The Javascript calling program in Node.js looks like the following.</p>
+<pre><code>const { create_sqlite, query_sqlite } = require('pkg/nodejs_example.js');
+create_sqlite(&quot;test.sqlite&quot;);
+query_sqlite(&quot;test.sqlite&quot;);
+</code></pre>
+<p>Run the Node.js app shows the following result.</p>
+<pre><code>$ node db.js
+1 : Bob McFett
+2 : Angus Vader
+3 : Imperator Colin
+</code></pre>
+<h2><a class="header" href="#http-request" id="http-request">HTTP request</a></h2>
+<p>First, you must have the <code>sync-request</code> module installed in
+your Node.js setup. The Rust function will make synchronous HTTP requests through this module.</p>
+<pre><code>$ npm i sync-request
+</code></pre>
+<p>The Rust functions to access web services via HTTP/HTTPS and then save content on the local file system are as follows.</p>
+<pre><code>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn fetch(url: &amp;str) {
+  let content = nodejs_helper::request::fetch_as_string(url);
+  nodejs_helper::console::log(url);
+  nodejs_helper::console::log(&amp;content);
+}
+
+#[wasm_bindgen]
+pub fn download(url: &amp;str, path: &amp;str) {
+  let content = nodejs_helper::request::fetch(url);
+  nodejs_helper::fs::write_file_sync(path, &amp;content);
+}
+</code></pre>
+<p>Build and create the <code>pkg</code> folder for the compiled <code>wasm</code> bytecode file and the Javascript shim file <code>my_project_name.js</code>.</p>
+<pre><code>$ ssvmup build
+</code></pre>
+<p>The Javascript calling program in Node.js looks like the following.</p>
+<pre><code>const { fetch, download } = require('../pkg/nodejs_example.js');
+
+fetch(&quot;https://raw.githubusercontent.com/second-state/nodejs-helper/master/LICENSE&quot;);
+download(&quot;https://www.secondstate.io/&quot;, &quot;test.html&quot;);
+</code></pre>
+<p>Run the Node.js app shows the following result.</p>
+<pre><code>$ node http.js
+https://raw.githubusercontent.com/second-state/nodejs-helper/master/LICENSE
+MIT License
+
+Copyright (c) 2020 Second State
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+... ...
+</code></pre>
 
                     </main>
 
