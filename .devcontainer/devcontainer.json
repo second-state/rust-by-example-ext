@@ -1,0 +1,35 @@
+{
+	"name": "Rust",
+	"dockerFile": "Dockerfile",
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"lldb.executable": "/usr/bin/lldb"
+	},
+
+	// This is the default port for mdbook serve
+	"forwardPorts": [3000],
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"rust-lang.rust",
+		"bungcip.better-toml",
+		"vadimcn.vscode-lldb",
+		"yzhang.markdown-all-in-one",
+		"streetsidesoftware.code-spell-checker",
+		"DavidAnson.vscode-markdownlint",
+		"shd101wyy.markdown-preview-enhanced",
+		"bierner.github-markdown-preview"
+	]
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "rustc --version",
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode"
+}
