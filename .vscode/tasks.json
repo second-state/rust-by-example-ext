@@ -1,9 +1,16 @@
 {
     "version": "2.0.0",
     "tasks": [{
-        "label": "mdbook",
+        "label": "mdbook serve",
+        "type": "shell"
         "command": "mdbook",
         "args": ["serve"],
+        "showOutput": "always"
+    },{
+        "label": "mdbook build",
         "type": "shell"
+        "command": "mdbook",
+        "args": ["build"],
+        "showOutput": "always"
     }]
 }
