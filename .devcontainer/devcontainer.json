@@ -10,7 +10,7 @@
 	},
 
 	// This is the default port for mdbook serve
-	"forwardPorts": [3000],
+	"forwardPorts": [3000, 3001, 8000, 8001],
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
@@ -19,13 +19,9 @@
 		"vadimcn.vscode-lldb",
 		"yzhang.markdown-all-in-one",
 		"streetsidesoftware.code-spell-checker",
-		"DavidAnson.vscode-markdownlint",
 		"shd101wyy.markdown-preview-enhanced",
 		"bierner.github-markdown-preview"
 	]
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "rustc --version",
