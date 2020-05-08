@@ -2,15 +2,15 @@
     "version": "2.0.0",
     "tasks": [{
         "label": "mdbook serve",
-        "type": "shell"
+        "type": "shell",
         "command": "mdbook",
         "args": ["serve"],
-        "showOutput": "always"
+        "problemMatcher": []
     },{
         "label": "mdbook build",
-        "type": "shell"
+        "type": "shell",
         "command": "mdbook",
         "args": ["build"],
-        "showOutput": "always"
+        "problemMatcher": []
     }]
 }
