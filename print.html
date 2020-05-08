@@ -197,7 +197,7 @@ over the Internet, it needs to serialize its data into a format that can be tran
 program uses deserialization to reconstruct the data.</p>
 <p>In Rust, most applications use the <a href="https://crates.io/crates/serde"><code>serde</code></a> crate to manage serialization and deserialization. In this chapter, we will cover how to serialize typed Rust data into <a href="serde/json.html">JSON strings</a> 
 or <a href="serde/bincode.html">byte arrays</a>. We will also discuss how to serialize third party structs in libraries.</p>
-<p>Checkout the <a href="https://serde.rs/">offical documentation</a> for the <code>serde</code> crate.</p>
+<p>Checkout the <a href="https://serde.rs/">official documentation</a> for the <code>serde</code> crate.</p>
 <h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
 <p>To use the <code>serde</code> crate, you just need to add the following dependencies to your <code>Cargo.toml</code> file.</p>
 <pre><code>[dependencies]
@@ -771,7 +771,7 @@ fn main() {
 <p>Besides operating system specific native binaries, Rust programs can also be compiled into managed 
 code that runs inside containers or virtual machines. The reason to use managed code is runtime safety. That allows un-trusted
 Rust programs to run in environments such as web browsers and servers. Compared with native binaries, managed
-containers are also much easier to provision, limit access to resources, start, and stop on demand. A popular managed code compiler target is the WebAssembly virtual machine. With WebAssembly, your Rust programs can run side-by-side with Javascript in web browsers and servers. </p>
+containers are also much easier to provision, limit access to resources, start, and stop on demand. A popular managed code compiler target is the WebAssembly virtual machine. With WebAssembly, your Rust programs can run side-by-side with Javascript in web browsers and servers.</p>
 <p>In this chapter, we will first show you how to <a href="webassembly/compile.html">compile</a> and <a href="(webassembly/run.html">run</a> a very simple Rust function in WebAssembly. The simple example is followed by a <a href="webassembly/browser.html">hello world example</a> running in web browsers.</p>
 <p>More complex Rust / WebAssembly examples come from the server-side. We will demonstrate how to <a href="webassembly/nodejs.html">call Rust functions from Node.js</a> Javascript applications, as well as how to <a href="webassembly/nodejshelper.html">access Node.js modules from Rust functions</a>.</p>
 <h1><a class="header" href="#compile-targets-for-webassembly" id="compile-targets-for-webassembly">Compile targets for WebAssembly</a></h1>
