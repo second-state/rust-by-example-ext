@@ -10,22 +10,15 @@
 	},
 
 	// This is the default port for mdbook serve
-	"forwardPorts": [3000, 3001, 8000, 8001],
+	"forwardPorts": [3000],
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"rust-lang.rust",
 		"bungcip.better-toml",
-		"vadimcn.vscode-lldb",
 		"yzhang.markdown-all-in-one",
 		"streetsidesoftware.code-spell-checker",
 		"shd101wyy.markdown-preview-enhanced",
 		"bierner.github-markdown-preview"
 	]
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "rustc --version",
-
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "vscode"
 }
