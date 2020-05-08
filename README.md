@@ -15,12 +15,12 @@ to read it online.
 
 ![Run an example from the web page](src/rbeext.gif)
 
-## Contribute using VSCode Codespaces
+## Contribute using VSCode codespaces
 
-The VSCode online IDE allows you to make changes, test your changes, and send us Pull Requests without having to run any software!
+The VSCode online IDE allows you to make changes, test your changes, and send us Pull Requests without having to install any software on your computer!
 
 * First [fork this repository](https://github.com/second-state/rust-by-example-ext/fork)!
-* Log into VSCode Codespaces with your Azure account and [open the forked repository in a new codespace](img/vscode_create.png). It will take a few minutes as codespace needs to build `mdbook` in the process.
+* Log into [VSCode codespaces](https://online.visualstudio.com/) with your Azure account and [open the forked repository in a new codespace](img/vscode_create.png). It will take a few minutes as codespace needs to build `mdbook` in the process.
 * Make changes or add to MD files in VSCode.
 * Use [`Menu | Terminal | Run Task ... | mdbook server`](img/vscode_run.png) to start a local server for your book. You will see it running in the [IDE's built-in Terminal](img/vscode_terminal.png).
 * [Open a browser](img/vscode_port.png) to access the VSCode server to see the book, and confirm your edits look good.
