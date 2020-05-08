@@ -11,6 +11,12 @@ used 3rd party libraries and tools.
 If you'd like to read Rust by Example -- Extended Edition, you can visit https://rust-by-example-ext.com/
 to read it online.
 
+## Interactive code example
+
+![Run an example from the web page](src/rbeext.gif)
+
+## Building locally
+
 If you'd like to read it locally, [install Rust], and then:
 
 ```bash
@@ -22,10 +28,6 @@ $ mdbook serve
 ```
 
 [install Rust]: https://www.rust-lang.org/tools/install
-
-## Interactive code example
-
-![Run an example from the web page](src/rbeext.gif)
 
 ## License
 

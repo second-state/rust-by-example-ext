@@ -7,4 +7,4 @@ program uses deserialization to reconstruct the data.
 In Rust, most applications use the [`serde`](https://crates.io/crates/serde) crate to manage serialization and deserialization. In this chapter, we will cover how to serialize typed Rust data into [JSON strings](serde/json.md) 
 or [byte arrays](serde/bincode.md). We will also discuss how to serialize third party structs in libraries.
 
-Checkout the [offical documentation](https://serde.rs/) for the `serde` crate.
+Checkout the [official documentation](https://serde.rs/) for the `serde` crate.
