@@ -17,6 +17,12 @@ to read it online.
 
 ## Contribute using VSCode codespaces
 
+<p>
+    <a href="https://online.visualstudio.com/environments/new?name=Rust%20by%20Example%20Extended&repo=second-state/rust-by-example-ext">
+        <img src="https://img.shields.io/endpoint?style=social&url=https%3A%2F%2Faka.ms%2Fvso-badge">
+    </a>
+</p>
+
 The VSCode online IDE allows you to make changes, test your changes, and send us Pull Requests without having to install any software on your computer!
 
 * First [fork this repository](https://github.com/second-state/rust-by-example-ext/fork)!
