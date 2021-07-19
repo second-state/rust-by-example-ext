@@ -8,7 +8,7 @@ openssl = "0.10.28"
 ```
 
 The example below generates an RSA public and private key pair, and
-encrypts the keys with a phassphrase. The outputs are text strings that
+encrypts the keys with a passphrase. The outputs are text strings that
 can be saved into files. Those files are called PEM (Privacy Enhanced Mail) files.
 
 ```rust,editable
