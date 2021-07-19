@@ -4,8 +4,8 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Rust By Example -- Extended Edition</title>
-        
         <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -13,32 +13,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
-
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
+        <link rel="stylesheet" href="fonts/fonts.css">
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -108,11 +103,9 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">Rust By Example -- Extended Edition</h1>
@@ -121,18 +114,15 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
                         <a href="https://github.com/second-state/rust-by-example-ext" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -140,8 +130,6 @@
                         </ul>
                     </div>
                 </div>
-                
-
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -153,7 +141,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#rust-by-example----extended-edition" id="rust-by-example----extended-edition">Rust by Example -- Extended Edition</a></h1>
+                        <h1 id="rust-by-example----extended-edition"><a class="header" href="#rust-by-example----extended-edition">Rust by Example -- Extended Edition</a></h1>
 <p><a href="https://www.rust-lang.org/">Rust</a> is a modern systems programming language focusing on safety, speed,
 and concurrency. It accomplishes these goals by being memory safe without using 
 garbage collection. A big part of Rust's strength and success comes from the
@@ -191,21 +179,21 @@ Additionally for the curious, you can also <a href="https://github.com/second-st
 <p><a href="webassembly.html">WebAssembly</a> - It is very popular to run Rust apps in WebAssembly, learn why and how.</p>
 </li>
 </ul>
-<h1><a class="header" href="#serialization-and-deserialization" id="serialization-and-deserialization">Serialization and deserialization</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="serialization-and-deserialization"><a class="header" href="#serialization-and-deserialization">Serialization and deserialization</a></h1>
 <p>Serialization is a core language feature in the era of web applications. When one program needs to talk to another program
 over the Internet, it needs to serialize its data into a format that can be transmitted through the network. The receiving
 program uses deserialization to reconstruct the data.</p>
 <p>In Rust, most applications use the <a href="https://crates.io/crates/serde"><code>serde</code></a> crate to manage serialization and deserialization. In this chapter, we will cover how to serialize typed Rust data into <a href="serde/json.html">JSON strings</a> 
 or <a href="serde/bincode.html">byte arrays</a>. We will also discuss how to serialize third party structs in libraries.</p>
 <p>Checkout the <a href="https://serde.rs/">official documentation</a> for the <code>serde</code> crate.</p>
-<h1><a class="header" href="#serialize-into-json-strings" id="serialize-into-json-strings">Serialize into JSON strings</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="serialize-into-json-strings"><a class="header" href="#serialize-into-json-strings">Serialize into JSON strings</a></h1>
 <p>To use the <code>serde</code> crate, you just need to add the following dependencies to your <code>Cargo.toml</code> file.</p>
 <pre><code>[dependencies]
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
 serde_json = &quot;1.0&quot;
 </code></pre>
 <p>The example below shows how to serialize a simple Rust primitive data type <code>i32</code> into a JSON string, and then deserialize it back. Run it! You can pass this JSON string to other Rust programs or Internet applications written in other languages.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate serde;
 </span>
 fn main() {
     let x: i32 = 5;
@@ -216,7 +204,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Here are more examples showing the serialization and deserialization of Rust primitive data types. Rust arrays and tuples are all serialized to JSON arrays. Edit the code below to try more Rust types, and run it to see the results.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate serde;
 </span>
 fn main() {
     let x: i32 = 5;
@@ -251,7 +239,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>What about structs and other custom Rust data types? Well, you just need to annotate them and they will automagically get serialization capabilities! Run the example below and you can see the JSON string representation of these Rust structs.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate serde;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate serde;
 </span>
 use serde::{Serialize, Deserialize};
 
@@ -288,7 +276,7 @@ fn main() {
     assert_eq!(lined.points[1].x, 3.0);
 }
 </code></pre></pre>
-<h1><a class="header" href="#serialize-into-binary" id="serialize-into-binary">Serialize into binary</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="serialize-into-binary"><a class="header" href="#serialize-into-binary">Serialize into binary</a></h1>
 <p>JSON strings are portable across almost all programming languages and frameworks. But for communication between Rust programs, a binary format could be much more efficient. Here is where <code>bincode</code> comes into play. To use the <code>bincode</code> crate, you just need to add the following dependencies to your <code>Cargo.toml</code> file.</p>
 <pre><code>[dependencies]
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
@@ -398,7 +386,7 @@ fn main() {
 struct Point serializes into byte array [0, 0, 64, 64, 0, 0, 128, 64]
 struct Line serializes into byte array [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 64, 0, 0, 64, 64, 0, 0, 128, 64, 1, 243, 4, 53, 64, 11, 0, 0, 0, 0, 0, 0, 0, 97, 32, 116, 104, 105, 110, 32, 108, 105, 110, 101]
 </code></pre>
-<h1><a class="header" href="#serialize-third-party-library-types" id="serialize-third-party-library-types">Serialize third party library types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="serialize-third-party-library-types"><a class="header" href="#serialize-third-party-library-types">Serialize third party library types</a></h1>
 <p>Many third party Rust crates already support serialization and deserialization
 via the <code>serde</code> crate. You just need to enable the <code>serde</code> feature when you 
 declare the crate as dependency.</p>
@@ -431,7 +419,7 @@ fn main() {
 <p>What about third party crates that are not yet to support the <code>serde</code> feature?
 The <code>serde</code> crate provides another approach called <a href="https://serde.rs/remote-derive.html">remote derive</a>. Basically, you create a local copy of the remote type
 and then serialize the local type through a bridge. Check out the <a href="https://serde.rs/remote-derive.html">documentation</a>.</p>
-<h1><a class="header" href="#random-numbers" id="random-numbers">Random numbers</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="random-numbers"><a class="header" href="#random-numbers">Random numbers</a></h1>
 <p>A lot of applications require random numbers. The <a href="https://crates.io/crates/rand"><code>rand</code></a> crate is a very popular library in Rust to generate random numbers. 
 It supports a wide variety of random number generators and distributions, each with a different performance and security trade off. 
 For more details, you can read the <a href="https://rust-random.github.io/book/intro.html">Rust Rand Book</a>.
@@ -439,9 +427,9 @@ To use the <code>rand</code> crate, just do the following in your <code>Cargo.to
 <pre><code>[dependencies]
 rand = &quot;0.7.3&quot;
 </code></pre>
-<h2><a class="header" href="#get-a-random-number" id="get-a-random-number">Get a random number</a></h2>
+<h2 id="get-a-random-number"><a class="header" href="#get-a-random-number">Get a random number</a></h2>
 <p>To get a random number, you can simply do the following.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
 fn main() {
     let i: i32 = rand::random();
@@ -449,7 +437,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>The <code>random()</code> is smart enough to know the primitive type it is <strong>supposed</strong> to generate. Check out the example below.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
 fn main() {
     let x: u8 = rand::random();
@@ -464,7 +452,7 @@ fn main() {
 </code></pre></pre>
 <p>What about generating a random number within a range? For that, you need to
 create a random number generator and call its <code>gen_range()</code> function.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
 use rand::thread_rng;
 use rand::Rng;
@@ -476,12 +464,12 @@ fn main() {
     println!(&quot;Number from 0 to 9: {}&quot;, rng.gen_range(0, 10));
 }
 </code></pre></pre>
-<h2><a class="header" href="#get-a-series-of-random-numbers" id="get-a-series-of-random-numbers">Get a series of random numbers</a></h2>
+<h2 id="get-a-series-of-random-numbers"><a class="header" href="#get-a-series-of-random-numbers">Get a series of random numbers</a></h2>
 <p>In order to get a series of random numbers, you could call the <code>random()</code> function
 multiple times. But that is slow since every time it needs to instantiate and seed
 a new random number generator. It is faster to create the generator once and 
 call its <code>gen()</code> function repeatedly.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
 use rand::thread_rng;
 use rand::Rng;
@@ -494,7 +482,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>The generator can quickly fill an array with random integers.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
 use rand::thread_rng;
 use rand::Rng;
@@ -507,7 +495,7 @@ fn main() {
 </code></pre></pre>
 <p>Another neat feature of the generator is that it can generate random numbers 
 from a probability distribution.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>
 use rand::thread_rng;
 use rand::Rng;
@@ -522,7 +510,7 @@ fn main() {
     println!(&quot;Some numbers: {:?}&quot;, nums);
 }
 </code></pre></pre>
-<h2><a class="header" href="#webassembly" id="webassembly">WebAssembly</a></h2>
+<h2 id="webassembly"><a class="header" href="#webassembly">WebAssembly</a></h2>
 <p>Under the hood, the <code>rand</code> crate uses the operating system's native random
 functions to seed the random number generator. This initial entropy seed
 comes from the hardware noise. However, when Rust programs inside virtual
@@ -541,7 +529,7 @@ from Rust.</p>
 <li>The <a href="https://www.npmjs.com/package/ssvmup"><code>ssvmup</code></a> and <a href="https://www.npmjs.com/package/ssvm"><code>ssvm</code></a> tools enable high performance Rust + JavaScript hybrid applications in Node.js. <a href="https://cloud.secondstate.io/server-side-webassembly/getting-started">Check out this tutorial</a>.</li>
 <li>The <a href="https://rustwasm.github.io/wasm-pack/"><code>wasm-pack</code></a> tool can generate Rust and JavaScript code for the V8 engine.</li>
 </ul>
-<h1><a class="header" href="#cryptography-with-openssl" id="cryptography-with-openssl">Cryptography with openssl</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cryptography-with-openssl"><a class="header" href="#cryptography-with-openssl">Cryptography with openssl</a></h1>
 <p><a href="https://www.openssl.org/">OpenSSL</a> is an widely used open source library to perform cryptographic
 operations. We can use it to encrypt, decrypt, digest, and sign data, 
 as well as to make SSL/TLS secure connections through the Internet.</p>
@@ -551,15 +539,15 @@ You can <a href="https://docs.rs/openssl/0.10.29/openssl/">read more documentati
 <p>Since the <code>openssl</code> crate relies on the native operating system's OpenSSL library to perform cryptographic operations, it cannot be compiled into WebAssembly targets.</p>
 </blockquote>
 <p>Let's <a href="openssl/rsa.html">start with an example</a> to create a pair of RSA keys, and use them to encrypt and decrypt data.</p>
-<h1><a class="header" href="#rsa-public-key-encryption" id="rsa-public-key-encryption">RSA public key encryption</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rsa-public-key-encryption"><a class="header" href="#rsa-public-key-encryption">RSA public key encryption</a></h1>
 <p>To use the <code>openssl</code> crate, you just need to add the following dependencies to your <code>Cargo.toml</code> file.</p>
 <pre><code>[dependencies]
 openssl = &quot;0.10.28&quot;
 </code></pre>
 <p>The example below generates an RSA public and private key pair, and
-encrypts the keys with a phassphrase. The outputs are text strings that
+encrypts the keys with a passphrase. The outputs are text strings that
 can be saved into files. Those files are called PEM (Privacy Enhanced Mail) files.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate openssl;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate openssl;
 </span>
 use openssl::rsa::{Rsa, Padding};
 use openssl::symm::Cipher;
@@ -578,7 +566,7 @@ fn main() {
 <p>Next, we can import public and private keys from the PEM document.
 In the example, we demonstrate how to encrypt a byte array of data using the
 public key. Such encrypted data can only be decrypted by the correspding private key.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate openssl;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate openssl;
 </span>
 use openssl::rsa::{Rsa, Padding};
 
@@ -628,7 +616,7 @@ LRsReK2BDT/pnhhZG96qSsNPwQlrwffBleTy9BGSuHHox6A7GKyVAAOMND/TY1ak
     println!(&quot;Decrypted: {}&quot;, String::from_utf8(buf).unwrap());
 }
 </code></pre></pre>
-<h1><a class="header" href="#n-dimensional-array" id="n-dimensional-array">N-dimensional array</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="n-dimensional-array"><a class="header" href="#n-dimensional-array">N-dimensional array</a></h1>
 <p>The N-dimensional array is a widely used data structure for scientific 
 computing and data analysis. The <a href="https://crates.io/crates/ndarray"><code>ndarray</code></a> crate provides support for
 N-dimensional array in Rust. It is widely used by other crates.
@@ -636,11 +624,11 @@ To use the <code>ndarray</code> crate, just do the following in your <code>Cargo
 <pre><code>[dependencies]
 ndarray = &quot;0.13.0&quot;
 </code></pre>
-<h2><a class="header" href="#basic-operations" id="basic-operations">Basic operations</a></h2>
+<h2 id="basic-operations"><a class="header" href="#basic-operations">Basic operations</a></h2>
 <p>To create a 3-D array, and access one of its element by index, do the following.
 The example creates a 3x4x5 array, and we access its elements using the 
 <code>[[i, j, k]]</code> notation, where <code>i j k</code> are index positions for the element.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate ndarray;
 </span>
 use ndarray::Array3;
 
@@ -653,7 +641,7 @@ fn main() {
 }
 </code></pre></pre>
 <p>Here is another example of a 3x3 2D array.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate ndarray;
 </span>
 use ndarray::Array2;
 
@@ -672,14 +660,14 @@ fn main() {
 }
 </code></pre></pre>
 <p>Manually setting array elements by index positions is tedious. Next, let's see a better way to do this.</p>
-<h2><a class="header" href="#create-arrays" id="create-arrays">Create arrays</a></h2>
+<h2 id="create-arrays"><a class="header" href="#create-arrays">Create arrays</a></h2>
 <p>The <code>arr2</code> and <code>arr3</code> macros allow you to create 2D and 3D arrays quickly.</p>
 <p>The example creates a 3x3 2D array.</p>
 <ul>
 <li>The array has 3 rows <code>[row0, row1, row2]</code>. For example, <code>row0</code> is <code>[1, 2, 3]</code>.</li>
 <li>Each row has 3 columns <code>col0, col1, col2</code>. For example, <code>row0 col0</code> is <code>1</code>.</li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate ndarray;
 </span>
 use ndarray::arr2;
 
@@ -697,7 +685,7 @@ fn main() {
 <li>Each row has 2 columns <code>[col0, col1]</code>. For example, <code>row0 col0</code> is <code>[1, 2]</code>.</li>
 <li>Each column has 2 levels <code>lvl0, lvl1</code>. For example, <code>row0 col0 lvl0</code> is <code>1</code>. </li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate ndarray;
 </span>
 use ndarray::arr3;
 
@@ -709,13 +697,13 @@ fn main() {
     println!(&quot;The 3D array is {:?}&quot;, a3);
 }
 </code></pre></pre>
-<h2><a class="header" href="#iterate-through-the-arrays" id="iterate-through-the-arrays">Iterate through the arrays</a></h2>
+<h2 id="iterate-through-the-arrays"><a class="header" href="#iterate-through-the-arrays">Iterate through the arrays</a></h2>
 <p>Using the <code>genrows()</code> function, you can flatten the <code>n</code> dimension array into an 
 array of rows. Each row contains a simple (one dimension) array of values
 along the original array's shortest axis.</p>
 <p>Using the <code>outer_iter()</code> function, you can deconstruct the <code>n</code> dimension array 
 into a simple (one dimension) array of <code>n-1</code> dimension arrays.</p>
-<pre><pre class="playpen"><code class="language-rust editable"><span class="boring">extern crate ndarray;
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate ndarray;
 </span>
 use ndarray::arr3;
 
@@ -732,7 +720,7 @@ fn main() {
     }
 }
 </code></pre></pre>
-<h1><a class="header" href="#lazy-static" id="lazy-static">Lazy static</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lazy-static"><a class="header" href="#lazy-static">Lazy static</a></h1>
 <p>The <a href="https://docs.rs/lazy_static/1.4.0/lazy_static/"><code>lazy_static</code></a> crate is a simple but widely used macro that allows you to initialize static variables at runtime.
 To use it, add the following to your <code>Cargo.toml</code>.</p>
 <pre><code>[dependencies]
@@ -740,7 +728,7 @@ lazy_static = &quot;1.4.0&quot;
 </code></pre>
 <p>The example below shows three static variables that must be initialized
 by code after the program starts.</p>
-<pre><pre class="playpen"><code class="language-rust editable">#[macro_use]
+<pre><pre class="playground"><code class="language-rust editable">#[macro_use]
 <span class="boring">extern crate lazy_static;
 </span>
 use std::collections::HashMap;
@@ -765,16 +753,16 @@ fn main() {
     println!(&quot;A expensive calculation on a static results in: {}.&quot;, *NUMBER);
 }
 </code></pre></pre>
-<h1><a class="header" href="#regular-expression" id="regular-expression">Regular expression</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="regular-expression"><a class="header" href="#regular-expression">Regular expression</a></h1>
 <p>Coming soon!</p>
-<h1><a class="header" href="#webassembly-1" id="webassembly-1">WebAssembly</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="webassembly-1"><a class="header" href="#webassembly-1">WebAssembly</a></h1>
 <p>Besides operating system specific native binaries, Rust programs can also be compiled into managed 
 code that runs inside containers or virtual machines. The reason to use managed code is runtime safety. That allows un-trusted
 Rust programs to run in environments such as web browsers and servers. Compared with native binaries, managed
 containers are also much easier to provision, limit access to resources, start, and stop on demand. A popular managed code compiler target is the WebAssembly virtual machine. With WebAssembly, your Rust programs can run side-by-side with Javascript in web browsers and servers.</p>
 <p>In this chapter, we will first show you how to <a href="webassembly/compile.html">compile</a> and <a href="(webassembly/run.html">run</a> a very simple Rust function in WebAssembly. The simple example is followed by a <a href="webassembly/browser.html">hello world example</a> running in web browsers.</p>
 <p>More complex Rust / WebAssembly examples come from the server-side. We will demonstrate how to <a href="webassembly/nodejs.html">call Rust functions from Node.js</a> Javascript applications, as well as how to <a href="webassembly/nodejshelper.html">access Node.js modules from Rust functions</a>.</p>
-<h1><a class="header" href="#compile-targets-for-webassembly" id="compile-targets-for-webassembly">Compile targets for WebAssembly</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="compile-targets-for-webassembly"><a class="header" href="#compile-targets-for-webassembly">Compile targets for WebAssembly</a></h1>
 <p>There are several Rust compiler targets for WebAssembly. They differ
 because different WebAssembly VMs supports different extensions. 
 For example, some WebAssembly VMs have access the WASI extension that allows
@@ -799,7 +787,7 @@ pub extern fn triple(x: i32) -&gt; i32 {
 <pre><code>$ cargo +nightly build --target wasm32-unknown-unknown --release
 </code></pre>
 <p>The compiled WebAssembly bytecode application is a single file with the <code>wasm</code> extension. For example, here is the <code>wasm</code> file from our example <code>target/wasm32-unknown-unknown/release/my_project_name.wasm</code>.</p>
-<h1><a class="header" href="#run-a-simple-webassembly-program" id="run-a-simple-webassembly-program">Run a simple WebAssembly program</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="run-a-simple-webassembly-program"><a class="header" href="#run-a-simple-webassembly-program">Run a simple WebAssembly program</a></h1>
 <p>In the previous article, we showed you how to compile a Rust program
 into a WebAssembly bytecode file.
 The easiest way to run a WebAssembly bytecode file is to simply load
@@ -822,7 +810,7 @@ in WebAssembly and triple your input number. The code below returns number <code
 </code></pre>
 <p>Of course, you can just easily load Rust compiled WebAssembly functions from
 your web page. Check out <a href="https://github.com/second-state/wasm-learning/tree/master/browser/triple">a full example here</a>.</p>
-<h1><a class="header" href="#rust-javascript-binding-through-webassembly" id="rust-javascript-binding-through-webassembly">Rust Javascript binding through WebAssembly</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-javascript-binding-through-webassembly"><a class="header" href="#rust-javascript-binding-through-webassembly">Rust Javascript binding through WebAssembly</a></h1>
 <p>In the previous articles, we showed how to compile a Rust function into
 WebAssembly, and then call this function from Javascript in a web browser.
 However, that approach has some severe limitations. Specifically, WebAssembly
@@ -859,7 +847,7 @@ say(&quot;Michael&quot;);
 </code></pre>
 <p>The result is <code>Hello Michael</code>.</p>
 <p>To see the complete source code and run it on a web page, <a href="https://github.com/second-state/wasm-learning/tree/master/browser/hello">checkout here</a>.</p>
-<h1><a class="header" href="#rust-and-webassembly-on-the-server-side" id="rust-and-webassembly-on-the-server-side">Rust and WebAssembly on the server side</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-and-webassembly-on-the-server-side"><a class="header" href="#rust-and-webassembly-on-the-server-side">Rust and WebAssembly on the server side</a></h1>
 <p>In the previous article, we discussed how to run Rust functions in web browsers.
 In this article, we will show you how to do this on the server side.
 We believe that Rust and WebAssembly <a href="https://cloud.secondstate.io/server-side-webassembly/why">brings a lot of benefits</a> to server side
@@ -875,7 +863,7 @@ Javascript. An easy way to <code>wasm-bindgen</code> in a SSVM Node.js project i
 <pre><code>[dependencies]
 wasm-bindgen = &quot;=0.2.61&quot;
 </code></pre>
-<h2><a class="header" href="#hello-world" id="hello-world">Hello world</a></h2>
+<h2 id="hello-world"><a class="header" href="#hello-world">Hello world</a></h2>
 <p>Below is a Rust hello world function we wrote. The function must be annotated with <code>#[wasm_bindgen]</code> in order for the Rust compiler toolchain to call <code>wasm-bindgen</code> to generate the necessary shim code that binds Rust and Javascript through WebAssembly.</p>
 <pre><code>use wasm_bindgen::prelude::*;
 
@@ -900,7 +888,7 @@ Hello Michael
 <blockquote>
 <p>To see the complete source code and run it in a Node.js server, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/hello">checkout here</a>.</p>
 </blockquote>
-<h2><a class="header" href="#beyond-simple-arguments" id="beyond-simple-arguments">Beyond simple arguments</a></h2>
+<h2 id="beyond-simple-arguments"><a class="header" href="#beyond-simple-arguments">Beyond simple arguments</a></h2>
 <p>Using the <code>serde</code> crate, we can pass in and return arbitary Javascript values to/from Rust functions. The idea is to serialize the entire set of call arguments, and return values, into JSON strings. First, add <code>serde</code> to your dependencies.</p>
 <pre><code>[dependencies]
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
@@ -933,7 +921,7 @@ console.log( area(JSON.stringify(x)) );
 <blockquote>
 <p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/json_io">checkout here</a>.</p>
 </blockquote>
-<h2><a class="header" href="#structs-and-objects" id="structs-and-objects">Structs and objects</a></h2>
+<h2 id="structs-and-objects"><a class="header" href="#structs-and-objects">Structs and objects</a></h2>
 <p>Using the <code>serde</code> crate, we can pass in complex Javascript objects and arrays to Rust functions, and return Javascript objects. Javascript objects are mapped to Rust structs, and arrays are mapped to Rust tuples.</p>
 <p>The Rust function <code>draw()</code> takes two JSON strings, each representing a <code>Point</code> struct, and returns a JSON string representing a <code>Line</code> struct.</p>
 <pre><code>use wasm_bindgen::prelude::*;
@@ -978,7 +966,7 @@ console.log( draw(JSON.stringify(x)) );
 <blockquote>
 <p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/json_io">checkout here</a>.</p>
 </blockquote>
-<h2><a class="header" href="#binary-data" id="binary-data">Binary data</a></h2>
+<h2 id="binary-data"><a class="header" href="#binary-data">Binary data</a></h2>
 <p>A server side function often needs to process binary data directly. The SSVM
 toolchain supports that use case out of the box.
 In this example, we will show you how to create a Rust function on the server
@@ -1013,7 +1001,7 @@ console.log( sha3_digest(encoder.encode(&quot;This is an important message&quot;
 <blockquote>
 <p>To see the complete source code and run it in Node.js, <a href="https://github.com/second-state/wasm-learning/tree/master/nodejs/functions">checkout here</a>.</p>
 </blockquote>
-<h1><a class="header" href="#call-javascript-from-rust" id="call-javascript-from-rust">Call Javascript from Rust</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="call-javascript-from-rust"><a class="header" href="#call-javascript-from-rust">Call Javascript from Rust</a></h1>
 <p>In the previous article, we discussed how to call Rust functions from
 Javascript. How about the other way around? The <code>nodejs-helper</code> crate
 enables Rust functions to call Javascript functions in Node.js.</p>
@@ -1025,7 +1013,7 @@ enables Rust functions to call Javascript functions in Node.js.</p>
 wasm-bindgen = &quot;=0.2.61&quot;
 nodejs-helper = &quot;0.0.3&quot;
 </code></pre>
-<h2><a class="header" href="#console-and-time" id="console-and-time">Console and time</a></h2>
+<h2 id="console-and-time"><a class="header" href="#console-and-time">Console and time</a></h2>
 <p>Recall that WebAssembly is a very simple and standalone virtual machine. It
 has no access the operating system's standard input / output, as well as 
 features such as the system clock. In our Rust function, we can
@@ -1070,7 +1058,7 @@ Mon, 27 Apr 2020 18:56:40 GMT
 America/Chicago
 Monday, April 27, 2020, CDT
 </code></pre>
-<h2><a class="header" href="#file-system-access" id="file-system-access">File system access</a></h2>
+<h2 id="file-system-access"><a class="header" href="#file-system-access">File system access</a></h2>
 <p>The Rust functions in this section read an image file from the local file system, resize it, and write back to the file system. It also uses the Javascript console tool to measure the time spent on each task.</p>
 <pre><code>[dependencies]
 serde = { version = &quot;1.0&quot;, features = [&quot;derive&quot;] }
@@ -1139,7 +1127,7 @@ Resize file: 1506.694ms Done resizing
 Resize file: 1507.634ms Done writing
 Resize file: 1507.977ms
 </code></pre>
-<h2><a class="header" href="#sqlite-database-access" id="sqlite-database-access">Sqlite database access</a></h2>
+<h2 id="sqlite-database-access"><a class="header" href="#sqlite-database-access">Sqlite database access</a></h2>
 <p>First, you must have the <code>better-sqlite3</code> module installed in
 your Node.js setup. The Rust function will access a sqlite database through this module.</p>
 <pre><code>$ npm i better-sqlite3
@@ -1200,7 +1188,7 @@ query_sqlite(&quot;test.sqlite&quot;);
 2 : Angus Vader
 3 : Imperator Colin
 </code></pre>
-<h2><a class="header" href="#http-request" id="http-request">HTTP request</a></h2>
+<h2 id="http-request"><a class="header" href="#http-request">HTTP request</a></h2>
 <p>First, you must have the <code>sync-request</code> module installed in
 your Node.js setup. The Rust function will make synchronous HTTP requests through this module.</p>
 <pre><code>$ npm i sync-request
@@ -1245,26 +1233,16 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
-
-                        
-
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
-
-                
             </nav>
 
         </div>
 
-        
-
-        
         <!-- Google Analytics Tag -->
         <script type="text/javascript">
             var localAddrs = ["localhost", "127.0.0.1", ""];
@@ -1281,46 +1259,26 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
                 ga('send', 'pageview');
             }
         </script>
-        
-
-        
-        
-        
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
-        
-
-        
         <script src="ace.js" type="text/javascript" charset="utf-8"></script>
         <script src="editor.js" type="text/javascript" charset="utf-8"></script>
         <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
         <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
         <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
-        
-
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
-
-        
-        
         <script type="text/javascript">
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
-        
-        
-
     </body>
 </html>
